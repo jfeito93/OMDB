@@ -1,0 +1,27 @@
+{
+  "name": "OMDB",
+  "version": "1.0.0",
+  "description": "OMDB app",
+  "main": "index.js",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-router": "0.0.1",
+    "node-fetch": "^2.6.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jfeito93/OMDB.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jfeito93/OMDB/issues"
+  },
+  "homepage": "https://github.com/jfeito93/OMDB#readme"
+}
