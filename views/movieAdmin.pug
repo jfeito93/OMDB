@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+html(lang="en")
+    include head
+    body
+        include header
+        //main
+            .wrapper
+                article
+                    form if /post POST if /edit PUT
+                    if /edit llenar datos de la pelicula existente
+                        label(for='_title')
+                        input(type='text', name='title', id='_title')
+                        label(for='_year')
+                        input(type='text', name='year', id='_year')
+                        label(for='_director')
+                        input(type='text', name='director', id='_director')
+                        label(for='_cast')
+                        input(type='text', name='cast', id='_cast')
+                        label(for='_genre')
+                        input(type='text', name='genre', id='_genre')
+                        label(for='_rating')
+                        input(type='text', name='rating', id='_rating')
+                        label(for='_img')
+                        input(type='file', name='img', id='_img')
+                        input(type='submit', value='Iniciar Sesión')
