@@ -1,5 +1,5 @@
 {
-  "name": "ombd",
+  "name": "omdb",
   "version": "1.0.0",
   "description": "OMDB app",
   "main": "index.js",
