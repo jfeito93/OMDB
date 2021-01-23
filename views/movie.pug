@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 html(lang='en')
     include head
+    script(defer, src='./js/movie.js')
     body
         include header
         //main
-            .wrapper
-                article
+            article
+                .wrapper
                     img
                     span rating
                     h2 titulo (año)
@@ -14,4 +15,4 @@ html(lang='en')
                     p duracion
                     p reparto
                     p sinopsis
-                    a img añadir a favoritos   
+                    a i añadir a favoritos   

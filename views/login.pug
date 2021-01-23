@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 html(lang='en')
     include head
+    script(defer, src='./js/login.js')
     body
         include header
         //main
-            .wrapper
-                article 
+            article
+                .wrapper 
                     h2 iniciar sesión
                     form(method='POST', action='/login')
                         label(for='_email')

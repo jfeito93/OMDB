@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 html(lang='en')
     include head
+    script(defer, src=`./JS/index.js`)
     body
         include header
         //main
-            .wrapper
-                button( get a /login)
-                articulo de bienvenida
-                    img(src=imgURL)
-                    h2=message
+            a(href='/login') Iniciar Sesión
+            article 
+                .wrapper
+                    img(src=imgURL) 
+                    h2 Hello World!
            

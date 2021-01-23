@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 html(lang='en')
     include head
+    script(defer, src=`./JS/dashboard.js`)
     body
         include header
         //main
-            .wrapper
-                article de search
+            article de search
+                .wrapper
                     h2 Busca una peli!
                     button( /search) Ir al Buscador
-                article de movies
+            article de movies
+                .wrapper
                     h2 Tus pelis favoritas
                     button( /movies) Ir a Mis pelis favoritas
-                article de search
-                    button( /logout) Cerrar Sesión
+            a( /logout) Cerrar Sesión
                 
