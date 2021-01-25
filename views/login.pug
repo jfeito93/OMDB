@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+html(lang='en')
+    include head
+    script(defer, src='./js/login.js')
+    body
+        include header
+        //main
+            article
+                .wrapper 
+                    h2 iniciar sesión
+                    form(method='POST', action='/login')
+                        label(for='_email')
+                        input(type='email', name='email', id='_email')
+                        label(for='_pw')
+                        input(type='password', name='pw', id='_pw')
+                        input(type='submit', value='Iniciar Sesión')
+                    button(post a /login)
