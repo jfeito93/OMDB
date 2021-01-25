@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+html(lang='en')
+    include head
+    script(defer, src='./js/movies.js')
+    body
+        include header
+        //main
+            .wrapper
+                if /search {
+                    form(GET a /search)
+                        input(type='text', name='title)
+                        input(type='submit')
+                }
+            each movie in Array de JSONS de movies
+                div
+                    .wrapper
+                        img(src=movie.imgUrl)
+                        section
+                            h3 #{movie.title}(#{movie.year})
+                            h5=movie.director
+                            p=movie.genre
+                            p=movie.dur
+        
