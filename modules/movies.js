@@ -1,7 +1,7 @@
 const fetch = require('./utils/fetch');
 
 //GET Petitions
-exports.getHome = (req, res) => {
+/* exports.getHome = (req, res) => {
     res.status(200).render('index');
 };
 
@@ -19,7 +19,7 @@ exports.getMovieDetails = (req, res) => {
 
 exports.getMyMovies = (req, res) => {
     res.status(200).render('movies'); //? ¿? - ('movies') o ('search') - ¿Un pug para la lista de pelis del usuario y otro pug para todas las peliculas contenidas en la app?
-};
+}; */
 
 //POST petitions:
 
@@ -28,6 +28,8 @@ exports.getMyMovies = (req, res) => {
 // abrir sesión y redirección a /dashboard si es Usuario, o /movies si es Administrador:
 
 // IDEA: quiero que al rellenar el formulario de la vista de login, si los datos introducidos coinciden con datos de user, la app se direccione a la vista de dashboard.pug y en caso de que esos datos coincidan con datos de admin, la app se direccione a la vista de movies.pug
+
+// if logged render('dashboard') - if !== logged render('login') 
 
 /* exports.postLogIn = (req, res) => {
     res.status(200).render('login');
