@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+html(lang='en')
+    include head
+    script(defer, src='./js/movieAdmin.js')
+    body
+        include header
+        //main
+            article
+                .wrapper
+                    form if /post POST if /edit PUT
+                        label(for='_title') Título 
+                        input(type='text', name='title', id='_title')
+                        label(for='_year') Año
+                        input(type='text', name='year', id='_year')
+                        label(for='_director') Director 
+                        input(type='text', name='director', id='_director')
+                        label(for='_cast') Reparto  
+                        input(type='text', name='cast', id='_cast')
+                        label(for='_genre') Género
+                        input(type='text', name='genre', id='_genre')
+                        label(for='_duration') Duración
+                        input(type='text', name='duration', id='_duration')
+                        label(for='_rating') Puntuación
+                        input(type='text', name='rating', id='_rating')
+                        label(for='_plot') Argumento
+                        input(type='text', name='plot', id='_plot')
+                        label(for='_img') Imagen
+                        input(type='file', name='img', id='_img')
+                        input(type='submit', value='Guardar')

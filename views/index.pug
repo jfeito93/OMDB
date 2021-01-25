@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-html(lang="en")
-    head
-        meta(charset="UTF-8")
-        link(rel="stylesheet", href="./CSS/style.css")
-        script( defer src="./JS/script.js")
-        meta(name="viewport", content="width=device-width, initial-scale=1.0")
-        title Document
+html(lang='en')
+    include head
+    script(defer, src=`./JS/index.js`)
     body
-        h1 Hello, World!
+        include header
+        //main
+            a(href='/login') Iniciar Sesión
+            article 
+                .wrapper
+                    img(src=imgURL) 
+                    h2 Hello World!
+           
