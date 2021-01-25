@@ -3,10 +3,10 @@ const movies = require('./movies');
 
 //GET Petitions
 routes.get('/', movies.getHome); //* Llevar a la vista inicial de la app
-routes.get('/dashboard', movies.getDashBoard); // ¿panel de control?
-routes.get('/search', movies.getMovieTitle); //* Búsqueda por título de pelicula existente en la app
+routes.get('/dashboard', movies.getDashBoard); //* Llevar a la vista de control de la app
+routes.get('/search', movies.getMovies); //* Búsqueda por título de pelicula existente en la app
 routes.get('/search/:title', movies.getMovieDetails); //* Llevar a la vista de detalles de la pelicula buscada
-routes.get('/movies', movies.getMyMovies); //* Llevar a la lista personalizada del USUARIO de sus peliculas (pertenecientes a la app) guardadas
+routes.get('/movies', movies.getMyMovies); //* Llevar a la lista personalizada del USUARIO de sus peliculas guardadas 
 
 //POST petitions
 routes.post('/login', movies.postLogIn); //* Inicio de sesion en la app
