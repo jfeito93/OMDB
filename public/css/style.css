@@ -1,104 +1,131 @@
 /** Variable setup */
-:root{
-    /** BG color*/
-    --mainColor: #f6f6f6;
-    /** Accent Color */
-    --accentColor: #dd0063;
-    /** Accent Color  Hover*/
-    --accentColorHover: #ff1d7b;
-    /** Main type */
-    --mainFont: 'Roboto', sans-serif;
-    /** type main Color */
-    --fontColor: #202020;
-    /** Shadow Color */
-    --shadColor: #20202040;
-    /** Favourite default */
-    --starDefault: #d6d6d6;
-    /** Favourite color */
-    --starColor: #ffd000;
-    /** Favourite color */
-    --starColorHover: #ecd56d;
+:root {
+  /** BG color*/
+  --mainColor: #f6f6f6;
+  /** Accent Color */
+  --accentColor: #dd0063;
+  /** Accent Color  Hover*/
+  --accentColorHover: #ff1d7b;
+  /** Main type */
+  --mainFont: "Roboto", sans-serif;
+  /** type main Color */
+  --fontColor: #202020;
+  /** Shadow Color */
+  --shadColor: #20202040;
+  /** Favourite default */
+  --starDefault: #d6d6d6;
+  /** Favourite color */
+  --starColor: #ffd000;
+  /** Favourite color */
+  --starColorHover: #ecd56d;
 }
 /****** General Defaults Overrides ****/
 /** Remove default type */
-body{
-    font-family: var(--mainFont);
-    color: var(--fontColor);
+body {
+  font-family: var(--mainFont);
+  color: var(--fontColor);
 }
 /** Remove defauls anchor CSS */
-a{
-    text-decoration: none;
-    color: var(--fontColor);
+a {
+  text-decoration: none;
+  color: var(--fontColor);
 }
 /** Wrapper defaults */
-.wrapper{
-    width: 300px;
-    margin: 0 auto;
-    padding: 0.5px;
-    display: flex;
+.wrapper {
+  width: 300px;
+  margin: 0 auto;
+  padding: 0.5px;
+  display: flex;
 }
 /** General Button Behaviour */
-button{
-    box-sizing: border-box;
-    background: var(--accentColor);
-    border: none;
-    padding: 9px 18px;
-    border-radius: 12px;
-    box-shadow: 0 3px 3px var(--shadColor);
-    margin: 12px;
-    text-transform: uppercase;
-    font-family: var(--mainFont);
-    color: var(--mainColor);
+button,
+input[type="submit"] {
+  box-sizing: border-box;
+  background: var(--accentColor);
+  border: none;
+  padding: 9px 18px;
+  border-radius: 12px;
+  box-shadow: 0 3px 3px var(--shadColor);
+  margin: 12px;
+  text-transform: uppercase;
+  font-family: var(--mainFont);
+  color: var(--mainColor);
 }
-button:hover{
-    background: var(--accentColorHover);
+button:hover,
+input[type="submit"]:hover {
+  background: var(--accentColorHover);
 }
-button:active{
-    background: var(--mainColor) ;
-    color: var(--accentColorHover);
+button:active,
+input[type="submit"]:active {
+  background: var(--mainColor);
+  color: var(--accentColorHover);
 }
-button:focus{
-    outline: 0;
+button:focus,
+input[type="submit"]:focus {
+  outline: 0;
 }
 /** Icon buttons */
-button.icon{
-   padding: 0;
-   background: var(--mainColor);
+button.icon {
+  padding: 0;
+  background: var(--mainColor);
 }
 button.icon > span.material-icons {
-    color: var(--starDefault);
-    padding: 6px;
+  color: var(--starDefault);
+  padding: 6px;
 }
-button.icon:hover > span.material-icons{
-    color: var(--starColorHover);
+button.icon:hover > span.material-icons {
+  color: var(--starColorHover);
 }
 button.icon > span.material-icons.favourite {
-    color: var(--starColor);
+  color: var(--starColor);
 }
-button.icon:hover > span.material-icons.favourite{
-    color: var(--starColorHover);
+button.icon:hover > span.material-icons.favourite {
+  color: var(--starColorHover);
+}
+form{
+    width: 100%;
+    display: flex;
+  flex-flow: column;
+  margin-bottom: 36px;
+}
+div.wrapper > h2{
+    align-self: flex-start;
+}
+form > input[type="submit"] {
+  align-self:flex-end;
+}
+form > input[type="email"],
+form > input[type="password"],
+form > input[type="text"] {
+  margin-bottom: 12px;
+  width: 100%;
+  align-self: center;
 }
 /************ Header ************/
-header{
-    background: var(--mainColor);
+header {
+  background: var(--mainColor);
 }
 /************ Nav ***************/
 /* 
 /*
 /************ Main Content ******/
-main{
-    width: 100%;
+main {
+  width: 100%;
 }
-article{
-    margin: 24px 0;
-    width: 100%;
-    background: var(--mainColor);
+article {
+  margin: 24px 0;
+  width: 100%;
+  background: var(--mainColor);
 }
-article > .wrapper{
-    justify-content: center;
+article > .wrapper {
+  justify-content: center;
 }
-article > .wrapper > a:first-of-type{
-    font-weight: bold;
-    margin: 12px 0;
-    text-transform: uppercase;
+article > .wrapper > a:first-of-type {
+  font-weight: bold;
+  margin: 12px 0;
+  text-transform: uppercase;
+}
+article#login > .wrapper {
+  flex-flow: column;
+  align-items: center;
 }
