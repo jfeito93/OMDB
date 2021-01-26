@@ -4,14 +4,14 @@ html(lang='en')
     script(defer, src=`./JS/dashboard.js`)
     body
         include header
-        //main
-            article de search
+    main
+            article
                 .wrapper
                     h2 Busca una peli!
-                    button( /search) Ir al Buscador
-            article de movies
+                    button(onclick="window.location.href='/search'") Ir al Buscador
+            article
                 .wrapper
                     h2 Tus pelis favoritas
-                    button( /movies) Ir a Mis pelis favoritas
-            a( /logout) Cerrar Sesión
+                    button(onclick="window.location.href='/movies'") Ir a Mis pelis favoritas
+            a( href='/logout') Cerrar Sesión
                 

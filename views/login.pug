@@ -4,14 +4,15 @@ html(lang='en')
     script(defer, src='./js/login.js')
     body
         include header
-        //main
-            article
+        main
+            article#login
                 .wrapper 
-                    h2 iniciar sesión
+                    h2 Log In
+                        span.material-icons star
                     form(method='POST', action='/login')
-                        label(for='_email')
+                        label(for='_email') Email
                         input(type='email', name='email', id='_email')
-                        label(for='_pw')
+                        label(for='_pw') Password
                         input(type='password', name='pw', id='_pw')
-                        input(type='submit', value='Iniciar Sesión')
-                    button(post a /login)
+                        input(type='submit', value='Log In')
+                    button(post a /login) Log in with Google
