@@ -1,7 +1,8 @@
-const fetch = require('./utils/fetch');
+const fetch = require('./utils/fetch'),
+        auth = require('./auth');
 
 //GET Petitions
-/* exports.getHome = (req, res) => {
+ exports.getHome = (req, res) => {
     res.status(200).render('index');
 };
 
@@ -10,7 +11,7 @@ exports.getDashBoard = (req, res) => {
 };
 
 exports.getMovies = (req, res) => {
-    res.status(200).render('movies'); //? ¿? - ('movies') o ('search')  - ¿Un pug para la lista de pelis del usuario y otro pug para todas las peliculas contenidas en la app?
+    res.status(200).json(fetch.filmswithKeyWord("sand")); //? ¿? - ('movies') o ('search')  - ¿Un pug para la lista de pelis del usuario y otro pug para todas las peliculas contenidas en la app?
 };
 
 exports.getMovieDetails = (req, res) => {
@@ -18,9 +19,15 @@ exports.getMovieDetails = (req, res) => {
 };
 
 exports.getMyMovies = (req, res) => {
-    res.status(200).render('movies'); //? ¿? - ('movies') o ('search') - ¿Un pug para la lista de pelis del usuario y otro pug para todas las peliculas contenidas en la app?
-}; */
-
+    
+ //? ¿? - ('movies') o ('search') - ¿Un pug para la lista de pelis del usuario y otro pug para todas las peliculas contenidas en la app?
+}; 
+exports.getLogIn = (req,res) => {
+    res.status(200).render('login');
+}
+exports.getLogOut = (req,res) => {
+    res.status(200).render('index');
+}
 //POST petitions:
 
 // 1. exports.postLogIn
@@ -31,16 +38,7 @@ exports.getMyMovies = (req, res) => {
 
 // if logged render('dashboard') - if !== logged render('login') 
 
-/* exports.postLogIn = (req, res) => {
-    res.status(200).render('login');
-    if (role == 'User') {
-        return res.status(200).render('dashboard');
-    } else if (role == 'Admin') {
-        return res.status(200).render('movies');
-    } else {
-        res.json({ mensaje: "Usuario o contraseña incorrectos" });
-    }
-} */
+exports.postLogIn = (req, res) => auth.signJWT(req, res);
 
 
 // 2. exports.postLogOut
