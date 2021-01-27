@@ -1,12 +1,11 @@
 //* Configuración de .env para mantener la Clave API oculta
 const fetch = require('node-fetch');
-const dotenv = require('dotenv');
-dotenv.config();
 const API_KEY = process.env.APIKEY;
 //* Fetch a la API de OMDB con todas las películas que contengan una palabra clave,
 //* Devuelve el Array de JSON películas
- exports.filmswithKeyWord = (req, res, keyword) => {
+ exports.filmswithKeyWord = (req, res) => {
      //*fetch con la palabra clave introducida en la URL
+let keyword = req.keyword;
  fetch(`http://www.omdbapi.com/?s=${keyword}&apiKey=${API_KEY}`)
       .then(res => res.json())
      .then(movies => {
