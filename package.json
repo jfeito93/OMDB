@@ -8,12 +8,14 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
+    "mongodb": "^3.6.3",
     "node-fetch": "^2.6.1",
     "pug": "^3.0.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js"
+    "start": "nodemon app.js",
+    "repair": "fuser -k 3000/tcp"
   },
   "repository": {
     "type": "git",
