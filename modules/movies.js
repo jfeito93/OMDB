@@ -10,23 +10,25 @@ exports.getDashBoard = (req, res) => {
     res.status(200).render('dashboard');
 };
 
-exports.getMovies = (req, res) => {
-    res.status(200).json(fetch.filmswithKeyWord("sand")); //? ¿? - ('movies') o ('search')  - ¿Un pug para la lista de pelis del usuario y otro pug para todas las peliculas contenidas en la app?
+exports.getMovies = async (req, res) => {
+    res.status(200).render('movies'); //? ¿? - ('movies') o ('search')  - ¿Un pug para la lista de pelis del usuario y otro pug para todas las peliculas contenidas en la app?
 };
 
-exports.getMovieDetails = (req, res) => {
+exports.getMovieDetails = async (req, res) => {
     res.status(200).render('movie');
 };
 
-exports.getMyMovies = (req, res) => {
-    
+exports.getMyMovies = async (req, res) => {
+    res.status(200).render('movies');
  //? ¿? - ('movies') o ('search') - ¿Un pug para la lista de pelis del usuario y otro pug para todas las peliculas contenidas en la app?
 }; 
 exports.getLogIn = (req,res) => {
     res.status(200).render('login');
 }
 exports.getLogOut = (req,res) => {
-    res.status(200).render('index');
+    res.status(200)
+    .clearCookie('authcookie')
+    .render('index');
 }
 //POST petitions:
 
@@ -38,8 +40,9 @@ exports.getLogOut = (req,res) => {
 
 // if logged render('dashboard') - if !== logged render('login') 
 
-exports.postLogIn = (req, res) => auth.signJWT(req, res);
+exports.postLogIn = (req, res) => auth.signIn(req, res);
 
+exports.claims = (req, res, next) => auth.checkToken(req, res, next);
 
 // 2. exports.postLogOut
 // Cierre de sesión y redirección a /
