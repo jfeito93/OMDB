@@ -61,8 +61,11 @@ input[type="submit"]:active {
   color: var(--accentColorHover);
 }
 button:focus,
-input[type="submit"]:focus {
-  outline: 0;
+input[type="submit"]:focus, 
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="text"]:focus {
+  outline: var(--accentColor);
 }
 /** Icon buttons */
 button.icon {
@@ -93,6 +96,7 @@ div.wrapper > h2{
 }
 form > input[type="submit"] {
   align-self:flex-end;
+  margin-right:0 ;
 }
 form > input[type="email"],
 form > input[type="password"],

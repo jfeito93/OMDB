@@ -6,15 +6,9 @@ db = require("../models/mngdb");
 exports.getHome = (req, res) => {
   res.status(200).render("index");
 };
-
 exports.getDashBoard = (req, res) => {
   res.status(200).render("dashboard");
 };
-
-exports.getMovies = (req, res) => {
-  res.status(200).json(fetch.filmswithKeyWord("sand")); //? ¿? - ('movies') o ('search')  - ¿Un pug para la lista de pelis del usuario y otro pug para todas las peliculas contenidas en la app?
-};
-
 exports.getMovieDetails = async (req, res) => {
     console.log(req.params.id);
     let result = await db.readFilmDetails(req.params.id);
@@ -26,16 +20,21 @@ exports.getMovieDetails = async (req, res) => {
         id: result.id,
       });
   };
-
-exports.getMyMovies = (req, res) => {
-  //? ¿? - ('movies') o ('search') - ¿Un pug para la lista de pelis del usuario y otro pug para todas las peliculas contenidas en la app?
+exports.getMovies = async (req, res) => {
+    res.status(200).render('movies'); //? ¿? - ('movies') o ('search')  - ¿Un pug para la lista de pelis del usuario y otro pug para todas las peliculas contenidas en la app?
 };
-exports.getLogIn = (req, res) => {
-  res.status(200).render("login");
-};
-exports.getLogOut = (req, res) => {
-  res.status(200).render("index");
-};
+exports.getMyMovies = async (req, res) => {
+    res.status(200).render('movies');
+ //? ¿? - ('movies') o ('search') - ¿Un pug para la lista de pelis del usuario y otro pug para todas las peliculas contenidas en la app?
+}; 
+exports.getLogIn = (req,res) => {
+    res.status(200).render('login');
+}
+exports.getLogOut = (req,res) => {
+    res.status(200)
+    .clearCookie('authcookie')
+    .render('index');
+}
 //POST petitions:
 
 // 1. exports.postLogIn
@@ -46,7 +45,9 @@ exports.getLogOut = (req, res) => {
 
 // if logged render('dashboard') - if !== logged render('login')
 
-exports.postLogIn = (req, res) => auth.signJWT(req, res);
+exports.postLogIn = (req, res) => auth.signIn(req, res);
+
+exports.claims = (req, res, next) => auth.checkToken(req, res, next);
 
 // 2. exports.postLogOut
 // Cierre de sesión y redirección a /
