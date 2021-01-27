@@ -17,7 +17,7 @@ routes.get('/', auth.verifyJWT, movies.getDashBoard); //* Llevar a la vista inic
 //!Protegida (User)
 routes.get('/search', auth.verifyJWT, movies.getMovies); //* Búsqueda por título de pelicula existente en la app
 //!Protegida (User)
-routes.get('/search/:title', auth.verifyJWT, movies.getMovieDetails); //* Llevar a la vista de detalles de la pelicula buscada
+routes.get('/search/:id', /* auth.verifyJWT, */ movies.getMovieDetails); //* Llevar a la vista de detalles de la pelicula buscada
 //!Protegida (User y Admin)
 routes.get('/movies', movies.getMyMovies); //* Llevar a la lista personalizada del USUARIO de sus peliculas guardadas 
 //!Protegida (User y Admin)
@@ -26,7 +26,7 @@ routes.get('/logout', movies.getLogOut); //* Llevar a la lista personalizada del
 //! Protegida (User y Admin)
 //routes.post('/logout', movies.postLogOut); //* Cierre de sesion en la app
 //! Protegida (Admin)
-//routes.post('/createMovie', movies.postNewMovie); //* Adición de una nueva pelicula a la app
+routes.post('/createMovie', movies.postNewMovie); //* Adición de una nueva pelicula a la app
 
 //PUT petitions
 //! Protegida (Admin)

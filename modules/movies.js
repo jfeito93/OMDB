@@ -1,33 +1,41 @@
-const fetch = require('./utils/fetch'),
-        auth = require('./auth');
+const fetch = require("./utils/fetch"),
+  auth = require("./auth");
+db = require("../models/mngdb");
 
 //GET Petitions
- exports.getHome = (req, res) => {
-    res.status(200).render('index');
+exports.getHome = (req, res) => {
+  res.status(200).render("index");
 };
 
 exports.getDashBoard = (req, res) => {
-    res.status(200).render('dashboard');
+  res.status(200).render("dashboard");
 };
 
 exports.getMovies = (req, res) => {
-    res.status(200).json(fetch.filmswithKeyWord("sand")); //? ¿? - ('movies') o ('search')  - ¿Un pug para la lista de pelis del usuario y otro pug para todas las peliculas contenidas en la app?
+  res.status(200).json(fetch.filmswithKeyWord("sand")); //? ¿? - ('movies') o ('search')  - ¿Un pug para la lista de pelis del usuario y otro pug para todas las peliculas contenidas en la app?
 };
 
-exports.getMovieDetails = (req, res) => {
-    res.status(200).render('movie');
-};
+exports.getMovieDetails = async (req, res) => {
+    console.log(req.params.id);
+    let result = await db.readFilmDetails(req.params.id);
+    res
+      .status(200)
+      .json({
+        status: "Film achieved!",
+        data: result, // JSON.stringify(result)
+        id: result.id,
+      });
+  };
 
 exports.getMyMovies = (req, res) => {
-    
- //? ¿? - ('movies') o ('search') - ¿Un pug para la lista de pelis del usuario y otro pug para todas las peliculas contenidas en la app?
-}; 
-exports.getLogIn = (req,res) => {
-    res.status(200).render('login');
-}
-exports.getLogOut = (req,res) => {
-    res.status(200).render('index');
-}
+  //? ¿? - ('movies') o ('search') - ¿Un pug para la lista de pelis del usuario y otro pug para todas las peliculas contenidas en la app?
+};
+exports.getLogIn = (req, res) => {
+  res.status(200).render("login");
+};
+exports.getLogOut = (req, res) => {
+  res.status(200).render("index");
+};
 //POST petitions:
 
 // 1. exports.postLogIn
@@ -36,10 +44,9 @@ exports.getLogOut = (req,res) => {
 
 // IDEA: quiero que al rellenar el formulario de la vista de login, si los datos introducidos coinciden con datos de user, la app se direccione a la vista de dashboard.pug y en caso de que esos datos coincidan con datos de admin, la app se direccione a la vista de movies.pug
 
-// if logged render('dashboard') - if !== logged render('login') 
+// if logged render('dashboard') - if !== logged render('login')
 
 exports.postLogIn = (req, res) => auth.signJWT(req, res);
-
 
 // 2. exports.postLogOut
 // Cierre de sesión y redirección a /
@@ -50,18 +57,21 @@ exports.postLogIn = (req, res) => auth.signJWT(req, res);
     res.status(200).render('index');
 } */
 
-
 // 3. exports.postNewMovie
 
 // IDEA: quiero que cuando se realize este post la app se direccione a la vista de movieAdmin.pug en su formato de /createMovie
 
-/* exports.postNewMovie = (req, res) => {
-    if (role == 'Admin') {
-        return res.status(200).render('movieAdmin');
-    }
-} */
-
-
+exports.postNewMovie = async (req, res) => {
+  console.log(req.body);
+  let result = await db.createAdminFilmList(req.body);
+  res
+    .status(200)
+    .json({
+      status: "Film saved!",
+      data: { body: req.body },
+      id: result,
+    });
+};
 
 //PUT petitions
 
@@ -75,14 +85,12 @@ exports.postLogIn = (req, res) => auth.signJWT(req, res);
     }
 } */
 
-
-
 //DELETE petitions
 
 // 1. exports.deleteMovie
 
 // IDEA: quiero que cuando se realize este delete la app se direccione a UNA POSIBLE vista de movieAdmin.pug/remove.pug(nueva) en su formato de /removeMovie.
-// IDEA de remove.pug(nueva): vista con el tipico "¿esta seguro de que desea eliminar esta pelicula" - necesidad de ello o tiramos con el borrado acto seguido de accionar el boton de eliminar 
+// IDEA de remove.pug(nueva): vista con el tipico "¿esta seguro de que desea eliminar esta pelicula" - necesidad de ello o tiramos con el borrado acto seguido de accionar el boton de eliminar
 
 /* exports.deleteMovie = (req, res) => {
     if (role == 'Admin') {
