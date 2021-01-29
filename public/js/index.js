@@ -1,2 +1,12 @@
-//! Esto no se hace en el front, se hace en auth.js
-document.cookie = "authcookie= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
+const button = document.querySelector("span");
+const nav = document.querySelector("nav");
+console.log("hola")
+button.addEventListener('click', () => {
+    if(button.innerText === "menu"){
+        button.innerText = "close"
+        nav.classList = "";
+    }else{
+        button.innerText = "menu";
+        nav.classList = "none";
+    }
+})

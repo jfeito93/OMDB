@@ -30,6 +30,33 @@ a {
   text-decoration: none;
   color: var(--fontColor);
 }
+nav{
+  transition: 0.5s;
+  height: 96px;
+  overflow:hidden;
+}
+.none{
+  height:6px;
+  transition: 0.3s;
+}
+nav  ul{
+  list-style: none;
+  width: 100%;
+  margin: 0;
+}
+nav ul li{
+  text-indent: 0;
+  text-justify: right;
+  width: 100%;
+  padding: 6px 0;
+  background: var(--accentColor);
+}
+nav .wrapper {
+  justify-content: flex-end;
+}
+ul li:nth-child(even){
+  background: var(--accentColorHover);
+}
 /** Wrapper defaults */
 .wrapper {
   width: 300px;
@@ -98,26 +125,46 @@ form > input[type="submit"] {
   align-self:flex-end;
   margin-right:0 ;
 }
+form > label{
+  margin: 6px;
+}
 form > input[type="email"],
 form > input[type="password"],
 form > input[type="text"] {
   margin-bottom: 12px;
   width: 100%;
   align-self: center;
+  border: none;
+  border-radius: 3px;
+  border-bottom: var(--accentColor) solid 6px;
 }
 /************ Header ************/
 header {
   background: var(--mainColor);
 }
+header .wrapper {
+  justify-content: space-between;
+  align-items: center;
+  background: var(--mainColor);
+}
+header span {
+  font-size: 90px;
+  cursor: pointer;
+}
 /************ Nav ***************/
-/* 
-/*
+nav  ul  li{
+  text-align: right;
+  overflow: hidden;
+}
+nav ul {
+  padding: 0;
+}
 /************ Main Content ******/
 main {
   width: 100%;
 }
 article {
-  margin: 24px 0;
+  margin: 0;
   width: 100%;
   background: var(--mainColor);
 }
@@ -133,3 +180,6 @@ article#login > .wrapper {
   flex-flow: column;
   align-items: center;
 }
+
+/**************/
+
