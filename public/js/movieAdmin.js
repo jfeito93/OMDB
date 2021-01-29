@@ -47,3 +47,33 @@
     //* Si está vacío, cancelar
     //* Si esta lleno, event.target.submit()
 //*Escuchamos Cuando se da submit al formulario, y empezamos a validar
+
+//* hacer un bucle de 10 funciones - con while - mientras el campo este vacio haz esto diez veces
+
+      const checkPW = (event) => {
+        if (userPW.value) {
+          //* Si la contraseña es válida mandamos los datos al servidor
+          let data = { email: userEmail.value, pw: userPW.value };
+          fetch("http://localhost:3000/login", {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              if (data.status){
+                window.location.href='/';
+              }
+              //TODO instrucción al CSS
+              console.log(data.mensaje)
+            })
+            .catch((error) => console.error("Error:", error));
+      
+          //? Después del POST a /login res.redirect a /dashboard
+        } else {
+          //* Si la contraseña no es válida pedimos que la escriban de nuevo
+          console.log("Esccribe una contraseña");
+        }
+      };
