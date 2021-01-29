@@ -9,32 +9,28 @@ exports.getHome = (req, res) => {
 exports.getDashBoard = (req, res) => {
   res.status(200).render("dashboard");
 };
+
+//? mngdb.js READ
+//! MongoDB
 exports.getMovieDetails = async (req, res) => {
-    console.log(req.params.id);
-    let result = await db.readFilmDetails(req.params.id);
-    res
-      .status(200)
-      .json({
-        status: "Film achieved!",
-        data: result, // JSON.stringify(result)
-        id: result.id,
-      });
-  };
+  console.log(req.body.Title);
+  let lectura = await db.readFilmDetails(req.body.Title);
+  res.status(200).json({ status: "Film achieved!", data: { lectura } });
+};
+
 exports.getMovies = async (req, res) => {
-    res.status(200).render('movies'); //? ¿? - ('movies') o ('search')  - ¿Un pug para la lista de pelis del usuario y otro pug para todas las peliculas contenidas en la app?
+  res.status(200).render("movies"); //? ¿? - ('movies') o ('search')  - ¿Un pug para la lista de pelis del usuario y otro pug para todas las peliculas contenidas en la app?
 };
 exports.getMyMovies = async (req, res) => {
-    res.status(200).render('movies');
- //? ¿? - ('movies') o ('search') - ¿Un pug para la lista de pelis del usuario y otro pug para todas las peliculas contenidas en la app?
-}; 
-exports.getLogIn = (req,res) => {
-    res.status(200).render('login');
-}
-exports.getLogOut = (req,res) => {
-    res.status(200)
-    .clearCookie('authcookie')
-    .render('index');
-}
+  res.status(200).render("movies");
+  //? ¿? - ('movies') o ('search') - ¿Un pug para la lista de pelis del usuario y otro pug para todas las peliculas contenidas en la app?
+};
+exports.getLogIn = (req, res) => {
+  res.status(200).render("login");
+};
+exports.getLogOut = (req, res) => {
+  res.status(200).clearCookie("authcookie").render("index");
+};
 //POST petitions:
 
 // 1. exports.postLogIn
@@ -62,16 +58,16 @@ exports.claims = (req, res, next) => auth.checkToken(req, res, next);
 
 // IDEA: quiero que cuando se realize este post la app se direccione a la vista de movieAdmin.pug en su formato de /createMovie
 
+//? mngdb.js CREATE
+//! MongoDB
 exports.postNewMovie = async (req, res) => {
   console.log(req.body);
   let result = await db.createAdminFilmList(req.body);
-  res
-    .status(200)
-    .json({
-      status: "Film saved!",
-      data: { body: req.body },
-      id: result,
-    });
+  res.status(200).json({
+    status: "Film created!",
+    data: { body: req.body },
+    id: result,
+  });
 };
 
 //PUT petitions
@@ -80,11 +76,13 @@ exports.postNewMovie = async (req, res) => {
 
 // IDEA: quiero que cuando se realize este put la app se direccione a la vista de movieAdmin.pug en su formato de /editMovie
 
-/* exports.putMovieDetails = (req, res) => {
-    if (role == 'Admin') {
-        return res.status(200).render('movieAdmin');
-    }
-} */
+/* exports.putMovieDetails = async (req, res) => {
+  console.log(req.body.id);
+  let modification = await db.modFilmDetails(req.body.id);
+  res
+    .status(200)
+    .json({ status: "Film ", data: { modification } });
+}; */
 
 //DELETE petitions
 
