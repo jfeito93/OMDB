@@ -12,6 +12,14 @@
 //*Si editamos, GET a /search/:title
 //*Si creamos, que se en blanco
 //*Validar campo 1
+/* function checkField1 (event) {
+    event.preventDefault();
+    if(lleno){
+        //Siguiente campo
+    }else{
+        //Cancelo
+    }
+} */
     //* Si está vacío, cancelar
     //* Si esta lleno, siguiente Campo
 //*Validar campo 2
