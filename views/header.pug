@@ -1,13 +1,15 @@
 header 
     .wrapper
         h1 OMDB
-        nav
-            ul
-
-                li
-                    a(href='/search') Find
-                li
-                    a(href='/movies') My movies
-
-                li
-                    a(href='/logout')  Log out
+        span.material-icons menu
+nav.none
+    ul
+        li
+            .wrapper
+                a(href='/search') Find
+        li
+            .wrapper
+                a(href='/movies') My movies
+        li
+            .wrapper
+                a(href='/logout')  Log out
