@@ -1,4 +1,4 @@
-jwt = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 const TOKEN_SECRET = process.env.TOKEN_SECRET;
 const users = [
   {
@@ -45,7 +45,7 @@ exports.checkToken = (req, res, next) => {
       }
     });
   } else {
-    res.redirect("/login");
+    res.render("login");
   }
 };
 exports.signIn = async (req, res) => {

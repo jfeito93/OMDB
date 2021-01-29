@@ -1,5 +1,4 @@
-const fetch = require("./utils/fetch"),
-  auth = require("./auth");
+const auth = require("./auth");
 db = require("../models/mngdb");
 
 //GET Petitions
@@ -28,7 +27,12 @@ exports.getMyMovies = async (req, res) => {
  //? ¿? - ('movies') o ('search') - ¿Un pug para la lista de pelis del usuario y otro pug para todas las peliculas contenidas en la app?
 }; 
 exports.getLogIn = (req,res) => {
+  if(req.cookies.authcookie){
+    res.status(403).redirect('/');
+  }else{
     res.status(200).render('login');
+  }
+    
 }
 exports.getLogOut = (req,res) => {
     res.status(200)

@@ -5,7 +5,6 @@ const movies = require("./movies"),
 // Public GET Petitions
 //* Pública
 routes.get("/login", movies.getLogIn); //* Llevar a la vista de control de la app
-
 //Public POST Petitions
 //*Pública
 routes.post("/login", movies.postLogIn); //* Inicio de sesion en la app
@@ -16,7 +15,7 @@ routes.get("/", movies.claims, movies.getDashBoard); //* Llevar a la vista inici
 //Protegida (User)
 routes.get("/search", movies.claims, movies.getMovies); //* Búsqueda por título de pelicula existente en la app
 //Protegida (User)
-routes.get("/search/:id", /*movies.claims*,*/ movies.getMovieDetails); //* Llevar a la vista de detalles de la pelicula buscada
+routes.get("/search/:id", movies.claims, movies.getMovieDetails); //* Llevar a la vista de detalles de la pelicula buscada
 //Protegida (User y Admin)
 routes.get("/movies", movies.claims, movies.getMyMovies); //* Llevar a la lista personalizada del USUARIO de sus peliculas guardadas
 //Protegida (User y Admin)
