@@ -13,7 +13,7 @@ const firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
-
+//* Deslogarte de google
 async function signOut() {
   let auth2 = await gapi.auth2.getAuthInstance();
   auth2.signOut()
@@ -67,12 +67,10 @@ const checkPW = (event) => {
 
 
 async function onSignIn(googleUser) {
-
   let firebaseToken = await googleUser.getAuthResponse().id_token;
   let userMail = await googleUser.getBasicProfile().getEmail();
   let credential = await firebase.auth.GoogleAuthProvider.credential(firebaseToken);
-
-  // Sign in with credential from the Google user.
+  //* Sign in with credential from the Google user.
   firebase
     .auth()
     .signInWithCredential(credential)

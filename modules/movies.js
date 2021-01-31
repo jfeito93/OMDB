@@ -2,20 +2,15 @@ const auth = require("./auth");
 db = require("../models/mngdb");
 
 //GET Petitions
-exports.getHome = (req, res) => {
-  res.status(200).render("index");
-};
 exports.getDashBoard = (req, res) => {
   if (req.role === "user") {
-    res.status(200).render("dashboard");
+    res.status(200).render("dashboard", { menu: true, admin: false});
   } else {
     res.status(403).redirect('/movies');
   }
 };
 exports.getMovieDetails = async (req, res) => {
   if (req.role === 'user') {
-
-
     console.log(req.params.id);
     let result = await db.readFilmDetails(req.params.id);
     res
@@ -32,23 +27,39 @@ exports.getMovieDetails = async (req, res) => {
 exports.getMovies = async (req, res) => {
   if (req.role == "admin") {
     res.status(200).render("movies", {
-      title: 'Admin'
+      title: 'Admin',
+      menu: true,
+      admin: true
     }); //! render('movies', JSON de usuario)
   } else if (req.role == "user") {
     res.status(200).render('movies', {
-      title: 'User'
+      title: 'User',
+      menu: true,
+      admin: false
     }); //! render('movies', JSON de admin)
   }; //? ¿? - ('movies') o ('search')  - ¿Un pug para la lista de pelis del usuario y otro pug para todas las peliculas contenidas en la app?
 };
 exports.getMyMovies = async (req, res) => {
-  res.status(200).render('movies');
+  if (req.role == "admin") {
+    res.status(200).render("movies", {
+      title: 'Admin',
+      menu: true,
+      admin: true
+    }); //! render('movies', JSON de usuario)
+  } else if (req.role == "user") {
+    res.status(200).render('movies', {
+      title: 'User',
+      menu: true,
+      admin: false
+    }); //! render('movies', JSON de admin)
+  };
   //? ¿? - ('movies') o ('search') - ¿Un pug para la lista de pelis del usuario y otro pug para todas las peliculas contenidas en la app?
 };
 exports.getLogIn = (req, res) => {
   if (req.cookies.aCookie || req.cookies.gCookie) {
     res.status(403).redirect('/');
   } else {
-    res.status(200).render('login');
+    res.status(200).render('login', {menu: false});
   }
 
 }
@@ -56,12 +67,12 @@ exports.getLogOut = (req, res) => {
   if (req.cookies.aCookie) {
     res.status(200)
       .clearCookie('aCookie')
-      .render('index')
+      .render('index', {menu: false})
 
   } else if (req.cookies.gCookie) {
     res.status(200)
       .clearCookie('gCookie')
-      .render('index')
+      .render('index', {menu: false})
   } else {
     res.status(403)
       .redirect('/login')

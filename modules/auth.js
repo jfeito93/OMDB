@@ -23,11 +23,6 @@ const users = [{
     email: "luciadeveloper@gmail.com",
     pw: "6969",
     role: "user",
-  },
-  {
-    email: "mikkeperkinson@gmail.com",
-    pw: "1234",
-    role: "user",
   }
 ];
 
@@ -78,7 +73,6 @@ exports.signIn = async (req, res) => {
   const user = await users.find((u) => u.email === req.body.data.email);
   //* Si el user existe en la base de datos y ha pasado contraseña correcta por el request
   if (user && (req.body.data.pw === user.pw)) {
-
     //TODO Login correcto, generar token con JWT y cookie de sesión
     const token = jwt.sign({
       email: user.email,
@@ -101,7 +95,7 @@ exports.signIn = async (req, res) => {
         mensaje: "Contraseña o usuario incorrecto",
         status: false
       });
-    //* Si el user existe en la base de datos y ha pasado el token id de google
+  //* Si el user existe en la base de datos y ha pasado el token id de google
   } else if (user && JSON.stringify(req.body.data.gToken)) {
     //TODO Login correcto, generar cookie de sesión con Firebase.auth()
     const gToken = await req.body.data.gToken.toString();
@@ -144,7 +138,7 @@ exports.signIn = async (req, res) => {
 
       }).catch(err => console.log(err))
 
-    //*Si el usuario no existe en la base de datos
+  //*Si el usuario no existe en la base de datos
   } else if (!user) {
     //! Contraseña o usuario incorrectos
     res.status(401)

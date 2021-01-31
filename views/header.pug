@@ -1,15 +1,21 @@
 header 
     .wrapper
-        h1 OMDB
-        span.material-icons menu
+        a(href='/')
+            h1 OMDB
+
+        if menu           
+            span.material-icons menu
+
 nav.none
     ul
-        li
-            .wrapper
-                a(href='/search') Find
-        li
-            .wrapper
-                a(href='/movies') My movies
+        if !admin
+            li
+                .wrapper
+                    a(href='/search') Find
+        if !admin
+            li
+                .wrapper
+                    a(href='/movies') My movies
         li
             .wrapper
                 a(href='/logout')  Log out
