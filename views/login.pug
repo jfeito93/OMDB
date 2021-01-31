@@ -15,13 +15,13 @@ html(lang='en')
                         input(type='submit' value='Log In')
                     h3 Or log in with your google account!
                     .g-signin2(data-onsuccess='onSignIn' data-width='100px')
-                    //#google
+                    #google
         meta(name='google-signin-client_id' content='216822047855-cv280092h3q4lmcstmct3m25qd5c7jd5.apps.googleusercontent.com')
         meta(name='google-signin-cookiepolicy' content='single_host_origin')
         meta(name='google-signin-scope' content='profile email')
         script(src='https://apis.google.com/js/platform.js', async, defer)
         script(defer, src='https://www.gstatic.com/firebasejs/8.2.5/firebase-app.js')
         script(defer, src='https://www.gstatic.com/firebasejs/8.2.5/firebase-auth.js')
-        //script(src="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.js")
-        //link(type="text/css", rel="stylesheet", href="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.css")
+        script(src="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.js")
+        link(type="text/css", rel="stylesheet", href="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.css")
         script(defer, src='./js/login.js')

@@ -13,6 +13,7 @@ const firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
+
 async function signOut() {
   let auth2 = await gapi.auth2.getAuthInstance();
   auth2.signOut()
@@ -96,7 +97,9 @@ async function onSignIn(googleUser) {
           .then((data) => {
             console.log(data);
             if (data.status) {
-              window.location.assign('/');
+              signOut()
+              .then(() => window.location.assign('/'))
+
             }
             //TODO instrucción al CSS
           })

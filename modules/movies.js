@@ -34,7 +34,7 @@ exports.getMovies = async (req, res) => {
     res.status(200).render("movies", {
       title: 'Admin'
     }); //! render('movies', JSON de usuario)
-  } else if (req.role == "user"){
+  } else if (req.role == "user") {
     res.status(200).render('movies', {
       title: 'User'
     }); //! render('movies', JSON de admin)
@@ -56,12 +56,17 @@ exports.getLogOut = (req, res) => {
   if (req.cookies.aCookie) {
     res.status(200)
       .clearCookie('aCookie')
-      
+      .render('index')
+
   } else if (req.cookies.gCookie) {
     res.status(200)
       .clearCookie('gCookie')
+      .render('index')
+  } else {
+    res.status(403)
+      .redirect('/login')
   }
-  res.redirect('/login')
+
 }
 //POST petitions:
 
