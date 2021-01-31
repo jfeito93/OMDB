@@ -30,13 +30,13 @@ exports.getMovieDetails = async (req, res) => {
   }
 };
 exports.getMovies = async (req, res) => {
-  if (req.role === "user") {
+  if (req.role == "admin") {
     res.status(200).render("movies", {
-      title: 'User'
-    }); //! render('movies', JSON de usuario)
-  } else {
-    res.status(200).render('movies', {
       title: 'Admin'
+    }); //! render('movies', JSON de usuario)
+  } else if (req.role == "user"){
+    res.status(200).render('movies', {
+      title: 'User'
     }); //! render('movies', JSON de admin)
   }; //? ¿? - ('movies') o ('search')  - ¿Un pug para la lista de pelis del usuario y otro pug para todas las peliculas contenidas en la app?
 };
@@ -56,14 +56,12 @@ exports.getLogOut = (req, res) => {
   if (req.cookies.aCookie) {
     res.status(200)
       .clearCookie('aCookie')
-      .render('index');
+      
   } else if (req.cookies.gCookie) {
     res.status(200)
       .clearCookie('gCookie')
-      .render('index');
-  } else {
-    res.status(200).render('/login')
   }
+  res.redirect('/login')
 }
 //POST petitions:
 

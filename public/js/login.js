@@ -38,15 +38,16 @@ const checkPW = (event) => {
         Accept: 'application/json',
         method: "POST",
         body: JSON.stringify({
-          'data':{
+          'data': {
             'pw': userPW.value,
-            'email':userEmail.value
+            'email': userEmail.value
           }
         }),
         headers: {
           "Content-Type": "application/json",
         },
-      }).then(res => res.json())
+      })
+      .then(res => res.json())
       .then((data) => {
         console.log(data);
         if (data.status) {
@@ -74,29 +75,32 @@ async function onSignIn(googleUser) {
   firebase
     .auth()
     .signInWithCredential(credential)
-    .then(({user}) => {
+    .then(({
+      user
+    }) => {
       return user.getIdToken().then(idToken => {
         return fetch('http://localhost:3000/login', {
-          method: 'POST',
-          body: JSON.stringify({
-            'data': {
-              'gToken': idToken,
-              'email': userMail,
+            method: 'POST',
+            body: JSON.stringify({
+              'data': {
+                'gToken': idToken,
+                'email': userMail,
+              }
+            }),
+            headers: {
+              Accept: 'application/json',
+              "Content-Type": "application/json",
             }
-          }),
-          headers: {
-            Accept: 'application/json',
-            "Content-Type": "application/json",
-          }
-        });
+          })
+          .then(res => res.json())
+          .then((data) => {
+            console.log(data);
+            if (data.status) {
+              window.location.assign('/');
+            }
+            //TODO instrucción al CSS
+          })
       })
-    }).then(() => {
-      console.log("I'm doing this")
-      return firebase.auth().signOut().then(() => {
-        window.location.href = '/';
-      }).catch((error) => {
-        // An error happened.
-      });
     });
 }
 //! Google Client Secret ZixZyV4qaFwapQbrNCMmjL-Z
