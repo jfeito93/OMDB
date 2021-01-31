@@ -6,9 +6,16 @@ exports.getHome = (req, res) => {
   res.status(200).render("index");
 };
 exports.getDashBoard = (req, res) => {
-  res.status(200).render("dashboard");
+  if (req.role === "user") {
+    res.status(200).render("dashboard");
+  } else {
+    res.status(403).redirect('/movies');
+  }
 };
 exports.getMovieDetails = async (req, res) => {
+  if (req.role === 'user') {
+
+
     console.log(req.params.id);
     let result = await db.readFilmDetails(req.params.id);
     res
@@ -18,26 +25,45 @@ exports.getMovieDetails = async (req, res) => {
         data: result, // JSON.stringify(result)
         id: result.id,
       });
-  };
+  } else {
+    res.status(403).redirect('/movies');
+  }
+};
 exports.getMovies = async (req, res) => {
-    res.status(200).render('movies'); //? ¿? - ('movies') o ('search')  - ¿Un pug para la lista de pelis del usuario y otro pug para todas las peliculas contenidas en la app?
+  if (req.role === "user") {
+    res.status(200).render("movies", {
+      title: 'User'
+    }); //! render('movies', JSON de usuario)
+  } else {
+    res.status(200).render('movies', {
+      title: 'Admin'
+    }); //! render('movies', JSON de admin)
+  }; //? ¿? - ('movies') o ('search')  - ¿Un pug para la lista de pelis del usuario y otro pug para todas las peliculas contenidas en la app?
 };
 exports.getMyMovies = async (req, res) => {
-    res.status(200).render('movies');
- //? ¿? - ('movies') o ('search') - ¿Un pug para la lista de pelis del usuario y otro pug para todas las peliculas contenidas en la app?
-}; 
-exports.getLogIn = (req,res) => {
-  if(req.cookies.authcookie){
+  res.status(200).render('movies');
+  //? ¿? - ('movies') o ('search') - ¿Un pug para la lista de pelis del usuario y otro pug para todas las peliculas contenidas en la app?
+};
+exports.getLogIn = (req, res) => {
+  if (req.cookies.aCookie || req.cookies.gCookie) {
     res.status(403).redirect('/');
-  }else{
+  } else {
     res.status(200).render('login');
   }
-    
+
 }
-exports.getLogOut = (req,res) => {
+exports.getLogOut = (req, res) => {
+  if (req.cookies.aCookie) {
     res.status(200)
-    .clearCookie('authcookie')
-    .render('index');
+      .clearCookie('aCookie')
+      .render('index');
+  } else if (req.cookies.gCookie) {
+    res.status(200)
+      .clearCookie('gCookie')
+      .render('index');
+  } else {
+    res.status(200).render('/login')
+  }
 }
 //POST petitions:
 
@@ -73,7 +99,9 @@ exports.postNewMovie = async (req, res) => {
     .status(200)
     .json({
       status: "Film saved!",
-      data: { body: req.body },
+      data: {
+        body: req.body
+      },
       id: result,
     });
 };

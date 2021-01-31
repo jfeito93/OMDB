@@ -1,7 +1,10 @@
 const jwt = require("jsonwebtoken");
-const TOKEN_SECRET = process.env.TOKEN_SECRET;
-const users = [
-  {
+const admin = require('firebase-admin');
+const serviceAccount = require("../config/config");
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
+const users = [{
     email: "migueltafmart@gmail.com",
     pw: "1234",
     role: "admin",
@@ -19,56 +22,121 @@ const users = [
   {
     email: "luciadeveloper@gmail.com",
     pw: "6969",
-    role: "victima",
+    role: "user",
   },
+  {
+    email: "mikkeperkinson@gmail.com",
+    pw: "1234",
+    role: "user",
+  }
 ];
+
+
 // * Si el usuario ha hecho login con contraseña y usuario, usar JWT
 //*Esta función se va a ejecutar en routes.js, en las rutas protegidas
 exports.checkToken = (req, res, next) => {
   //  console.log(req)
-  if (req.cookies.authcookie) {
+  if (req.cookies.aCookie) {
     //get authcookie from request
-    const authcookie = req.cookies.authcookie;
+    const aCookie = req.cookies.aCookie;
     //verify token which is in cookie value
-    jwt.verify(authcookie, process.env.TOKEN_SECRET, (err, data) => {
+    jwt.verify(aCookie, process.env.TOKEN_SECRET, (err, data) => {
       if (err) {
         res.sendStatus(403);
       } else if (data.role === "admin") {
         req.user = data.user;
+        req.role = data.role
         next();
-      } else if (data.role === "user"){
+      } else if (data.role === "user") {
         req.user = data.user;
-        next();
-      }else if(data.role === "victima"){
-        req.user = data.user;
+        req.role = data.role;
         next();
       }
     });
-  } else {
-    res.render("login");
+  }else if( req.cookies.gCookie){
+    const gCookie = req.cookies.gCookie;
+
+    admin.auth()
+    .verifySessionCookie(gCookie, true)
+    .then( () => {
+      next();
+    }).catch( err => {
+      res.sendStatus(403);
+    })
+
+  }else{
+    res.redirect("/login");
   }
 };
 exports.signIn = async (req, res) => {
-  const username = req.body.email;
-  const password = req.body.pw;
-  // filter user from the users array by username and password
-  const user = await users.find((u) => {
-    return u.email === username && u.pw === password;
-  });
-  //Si la contraseña que nos han enviado coincide (ESTRICTO) con la contraseña que tiene asociada el usuario del mail que nos has introducido
-  if (user) {
-    //* El token se crea aquí
-    const token = jwt.sign({ email: user.email, role: user.role }, process.env.TOKEN_SECRET);
-    res
-      .cookie("authcookie", token, { maxAge: 900000, httpOnly: true })
-      .json({ mensaje: "Logging correcto", status: true });
+  //console.log(req.body.data);
+  //*Busca y almacena el usuario en la base de datos
+  // TODO QUERY a la BBDD SQL 
 
-    //*La cuenta no existe en la BD
-  } else if (users.find((u) => u.email === username)) {
-    res.json({ mensaje: "Contraseña incorrecta", status: false });
-  } else {
-    res.json({ mensaje: "La cuenta no existe", status: false });
+  //? Algo parecido a (`SELECT * FROM users WHERE email=${req.body.email}`)
+  const user = await users.find((u) => u.email === req.body.data.email);
+  //* Si el user existe en la base de datos y ha pasado contraseña correcta por el request
+  if (user && (req.body.data.pw === user.pw)) {
+    
+    //TODO Login correcto, generar token con JWT y cookie de sesión
+    const token = jwt.sign({
+      email: user.email,
+      role: user.role
+    }, process.env.TOKEN_SECRET);
+    res.cookie("aCookie", token, {
+        maxAge: 900000,
+        httpOnly: true
+      })
+      .status(200)
+      .json({
+        mensaje: "Logging correcto",
+        status: true
+      });
+    //* Si el user existe en la base de datos y ha pasado una contraseña por el request
+  } else if (user && req.body.data.pw) {
+    //! Contraseña o usuario incorrectos
+    res.status(401)
+    .json({
+      mensaje: "Contraseña o usuario incorrecto",
+      status: false
+    });
+    //* Si el user existe en la base de datos y ha pasado el token id de google
+  } else if (user && JSON.stringify(req.body.data.gToken)) {
+    //TODO Login correcto, generar cookie de sesión con Firebase.auth()
+    const gToken = await req.body.data.gToken.toString();
+    const expiresIn = 60 * 60 * 24 * 5 * 1000;
+    admin
+    .auth()
+    .verifyIdToken(gToken)
+    .then( decodedGToken => {
+      const uid = decodedGToken.uid;
+    }).catch( err => console.log(err))
+    admin.auth().createSessionCookie(gToken, {
+        expiresIn
+      })
+      .then(sessionCookie => {
+        const options = {
+          MaxAge: expiresIn,
+          httpOnly: true
+        };
+        res.cookie("gCookie", sessionCookie, options,);
+        res.status(200)
+        .json({
+          mensaje: "Logging correcto",
+          status: true
+        })
+      }, ).catch( (err => {
+        res.status(401)
+          .json( {mensaje: "El token de Firebase es incorrecto"})
+      }))
+    //*Si el usuario no existe en la base de datos
+  } else if (!user) {
+    //! Contraseña o usuario incorrectos
+    res.status(401)
+    .json({
+      mensaje: "Contraseña o usuario incorrecto",
+      status: false
+    });
   }
+ 
 };
-// * Si el usuario ha iniciado sesión con google, usar firebase.auth()
-// TODO investigar como se usa firebase con node.js o si solo se puede usar en los scripts de /public

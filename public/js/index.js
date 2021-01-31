@@ -1,12 +1,11 @@
-const button = document.querySelector("span");
+let menuButton = document.querySelector("span");
 const nav = document.querySelector("nav");
-console.log("hola")
-button.addEventListener('click', () => {
-    if(button.innerText === "menu"){
-        button.innerText = "close"
+menuButton.addEventListener('click', () => {
+    if(menuButton.innerText === "menu"){
+        menuButton.innerText = "close"
         nav.classList = "";
     }else{
-        button.innerText = "menu";
+        menuButton.innerText = "menu";
         nav.classList = "none";
     }
 })

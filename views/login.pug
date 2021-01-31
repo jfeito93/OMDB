@@ -1,17 +1,24 @@
 <!DOCTYPE html>
 html(lang='en')
     include head
-    script(defer, src='./js/login.js')
     body
         include header
         main
             article#login
                 .wrapper 
-                    h2 Log In
-                    form(method='POST', action='/login')
+                    h2 Log in!
+                    form(method='POST' action='/login')
                         label(for='_email') Email
-                        input(type='email', name='email', id='_email')
+                        input( autofocus, type='email' name='email' id='_email')
                         label(for='_pw') Password
-                        input(type='password', name='pw', id='_pw')
-                        input(type='submit', value='Log In')
-                    button(post a /login) Log in with Google
+                        input(type='password' name='pw' id='_pw')
+                        input(type='submit' value='Log In')
+                    h3 Or log in with your google account!
+                    .g-signin2(data-onsuccess='onSignIn' data-width='100px')
+        meta(name='google-signin-client_id' content='216822047855-cv280092h3q4lmcstmct3m25qd5c7jd5.apps.googleusercontent.com')
+        meta(name='google-signin-cookiepolicy' content='single_host_origin')
+        meta(name='google-signin-scope' content='profile email')
+        script(src='https://apis.google.com/js/platform.js', async, defer)
+        script(defer, src='https://www.gstatic.com/firebasejs/8.2.5/firebase-app.js')
+        script(defer, src='https://www.gstatic.com/firebasejs/8.2.5/firebase-auth.js')
+        script(defer, src='./js/login.js')
