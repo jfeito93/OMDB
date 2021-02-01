@@ -5,17 +5,21 @@ header
 
         if menu           
             span.material-icons menu
-
-nav.none
-    ul
-        if !admin
+if admin
+    nav.admin
+        ul
+            li
+                .wrapper
+                    a(href='/logout')  Log out
+else if !admin
+    nav
+        ul
             li
                 .wrapper
                     a(href='/search') Find
-        if !admin
             li
                 .wrapper
                     a(href='/movies') My movies
-        li
-            .wrapper
-                a(href='/logout')  Log out
+            li
+                .wrapper
+                    a(href='/logout')  Log out

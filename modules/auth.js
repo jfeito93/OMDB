@@ -97,7 +97,7 @@ exports.signIn = async (req, res) => {
       });
   //* Si el user existe en la base de datos y ha pasado el token id de google
   } else if (user && JSON.stringify(req.body.data.gToken)) {
-    //TODO Login correcto, generar cookie de sesión con Firebase.auth()
+    //* Login correcto, generar cookie de sesión con Firebase.auth()
     const gToken = await req.body.data.gToken.toString();
     const expiresIn = 60 * 60 * 24 * 5 * 1000;
 

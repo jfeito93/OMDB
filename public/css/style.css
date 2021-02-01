@@ -33,12 +33,16 @@ a {
 }
 nav{
   transition: 0.25s;
-  height: 96px;
+  height: 6px;
   overflow:hidden;
 }
-.none{
-  height:6px;
-  transition: 0.3s;
+nav.open{
+  height:96px;
+  transition: 0.25s;
+}
+nav.admin.open{
+  height:32px;
+  transition: 0.25s;
 }
 nav  ul{
   list-style: none;
