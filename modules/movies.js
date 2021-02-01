@@ -12,31 +12,38 @@ exports.getDashBoard = (req, res) => {
 //? mngdb.js READ
 //! MongoDB
 exports.getMovieDetails = async (req, res) => {
-  console.log(req.body.Title);
-  let lectura = await db.readFilmDetails(req.body.Title);
-  res.status(200).json({ status: "Film achieved!", data: { lectura } });
+  /* let Title = req.params.Title
+  let movies = await db.find({Title: new RegExp(Title)});
+
+  res.render('/search/:title', {movies}); */
+
+
+  //let lectura = await db.readFilmDetails(req.params.Title);
+  //res.status(200).json({ status: "Film details achieved!", data: { lectura } });
 };
 
 exports.getMovies = async (req, res) => {
-  res.status(200).render("movies"); //? ¿? - ('movies') o ('search')  - ¿Un pug para la lista de pelis del usuario y otro pug para todas las peliculas contenidas en la app?
+  //res.status(200).render("movies"); 
+  let Title = req.params.Title
+  let movies = await db.find({Title: new RegExp(Title)});
+
+  res.render('/search', {movies});
+  //? ¿? - ('movies') o ('search')  - ¿Un pug para la lista de pelis del usuario y otro pug para todas las peliculas contenidas en la app?
 };
 exports.getMyMovies = async (req, res) => {
-    res.status(200).render('movies');
- //? ¿? - ('movies') o ('search') - ¿Un pug para la lista de pelis del usuario y otro pug para todas las peliculas contenidas en la app?
-}; 
-exports.getLogIn = (req,res) => {
-  if(req.cookies.authcookie){
-    res.status(403).redirect('/');
-  }else{
-    res.status(200).render('login');
+  res.status(200).render("movies");
+  //? ¿? - ('movies') o ('search') - ¿Un pug para la lista de pelis del usuario y otro pug para todas las peliculas contenidas en la app?
+};
+exports.getLogIn = (req, res) => {
+  if (req.cookies.authcookie) {
+    res.status(403).redirect("/");
+  } else {
+    res.status(200).render("login");
   }
-    
-}
-exports.getLogOut = (req,res) => {
-    res.status(200)
-    .clearCookie('authcookie')
-    .render('index');
-}
+};
+exports.getLogOut = (req, res) => {
+  res.status(200).clearCookie("authcookie").render("index");
+};
 //POST petitions:
 
 // 1. exports.postLogIn
@@ -68,43 +75,41 @@ exports.claims = (req, res, next) => auth.checkToken(req, res, next);
 //! MongoDB
 exports.postNewMovie = async (req, res) => {
   console.log(req.body);
-  let result = await db.createAdminFilmList(req.body);
-  res.status(200).json({
-    status: "Film created!",
-    data: { body: req.body },
-    id: result,
-  });
+  let result = await db.createAdminMovie(req.body);
+  res.redirect("/movies");
 };
 
 //PUT petitions
-
-// 1. exports.putMovieDetails
-
 // IDEA: quiero que cuando se realize este put la app se direccione a la vista de movieAdmin.pug en su formato de /editMovie
 
-/* exports.putMovieDetails = async (req, res) => {
+//! MongoDB
+//* mngdb.js UPDATE
+exports.putMovieDetails = async (req, res) => {
   console.log(req.body.id);
-  let modification = await db.modFilmDetails(req.body.id);
+  let modification = await db.updateFilmDetails(req.body.id);
   res
     .status(200)
-    .json({ status: "Film ", data: { modification } });
-}; */
+    .json({ status: "Film value/values updated", data: { modification } });
+};
+
+//! MongoDB
+//* mngdb.js DELETE VALUE/VALUES FROM DOCUMENT
+exports.deleteMovieDetails = async (req, res) => {
+  console.log(req.body.id);
+  let valueElimination = await db.deleteFilmDetails(req.body.id);
+  res
+    .status(200)
+    .json({ status: "Film value/values deleted", data: { valueElimination } });
+};
 
 //DELETE petitions
 
-// 1. exports.deleteMovie
-
 // IDEA: quiero que cuando se realize este delete la app se direccione a UNA POSIBLE vista de movieAdmin.pug/remove.pug(nueva) en su formato de /removeMovie.
 // IDEA de remove.pug(nueva): vista con el tipico "¿esta seguro de que desea eliminar esta pelicula" - necesidad de ello o tiramos con el borrado acto seguido de accionar el boton de eliminar
-
-/* exports.deleteMovie = (req, res) => {
-    if (role == 'Admin') {
-        return res.status(200).render('movieAdmin');
-    }
-} */
-
-/* exports.deleteMovie = (req, res) => {
-    if (role == 'Admin') {
-        return res.status(200).render('remove');
-    }
-} */
+//? mngdb.js DELETE
+//! MongoDB
+exports.deleteMovie = async (req, res) => {
+  console.log(req.body.id);
+  let elimination = await db.deleteFilm(req.body.id);
+  res.status(200).json({ status: "Film deleted", data: { elimination } });
+};
