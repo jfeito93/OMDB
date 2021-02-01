@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 html(lang='en')
     include head
-    script(defer, src='./js/movies.js')
     body
         include header
         main
+            .wrapper
+                p=title
             //each movie in data.Search
                 div
                     .wrapper
                         p=movie.Title
+        script(defer, src='./js/films.js')
         

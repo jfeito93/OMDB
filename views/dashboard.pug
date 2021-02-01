@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 html(lang='en')
     include head
-    script(defer, src=`./JS/dashboard.js`)
     body
         include header
-    main
+        main
             article
                 .wrapper
                     h2 Busca una peli!
@@ -13,5 +12,8 @@ html(lang='en')
                 .wrapper
                     h2 Tus pelis favoritas
                     button(onclick="window.location.href='/movies'") Ir a Mis pelis favoritas
-            a( href='/logout') Cerrar Sesión
+            .wrapper
+                a( href='/logout') Cerrar Sesión
+        script(defer, src=`./JS/dashboard.js`)
+        
                 

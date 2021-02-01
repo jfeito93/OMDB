@@ -21,17 +21,13 @@ routes.get("/search", movies.claims, movies.getMovies);
 //* Búsqueda por título de pelicula existente en la app tanto para usuario como administrador
 
 //Protegida (User)
-routes.get("/search/:title", movies.getMovieDetails);
 //Llevar a la vista de detalles de la pelicula buscada
-
 //Protegida (User)
-//routes.get("/search/:id", movies.claims, movies.getMovieDetails); //* Llevar a la vista de detalles de la pelicula buscada
-//Protegida (User y Admin)
+routes.get("/search/:title", movies.claims, movies.getMovieDetails); //* Llevar a la vista de detalles de la pelicula buscada
+//Protegida (User & Admin)
 routes.get("/movies", movies.claims, movies.getMyMovies); //* Llevar a la lista personalizada del USUARIO de sus peliculas guardadas
-//Protegida (User y Admin)
-routes.get("/logout", movies.claims, movies.getLogOut);
-//* Llevar a la lista personalizada del USUARIO de sus peliculas guardadas
-
+//Protegida (Both)
+routes.get("/logout", movies.claims, movies.getLogOut); //* Llevar a la lista personalizada del USUARIO de sus peliculas guardadas
 
 // Private POST petitions
 

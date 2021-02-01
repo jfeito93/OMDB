@@ -1,7 +1,7 @@
 /** Variable setup */
 :root {
   /** BG color*/
-  --mainColor: #f6f6f6;
+  --mainColor: #e4efff;
   /** Accent Color */
   --accentColor: #dd0063;
   /** Accent Color  Hover*/
@@ -24,6 +24,7 @@
 body {
   font-family: var(--mainFont);
   color: var(--fontColor);
+  background: var(--mainColor);
 }
 /** Remove defauls anchor CSS */
 a {
@@ -31,13 +32,17 @@ a {
   color: var(--fontColor);
 }
 nav{
-  transition: 0.5s;
-  height: 96px;
+  transition: 0.25s;
+  height: 6px;
   overflow:hidden;
 }
-.none{
-  height:6px;
-  transition: 0.3s;
+nav.open{
+  height:96px;
+  transition: 0.25s;
+}
+nav.admin.open{
+  height:32px;
+  transition: 0.25s;
 }
 nav  ul{
   list-style: none;
@@ -92,7 +97,8 @@ input[type="submit"]:focus,
 input[type="email"]:focus,
 input[type="password"]:focus,
 input[type="text"]:focus {
-  outline: var(--accentColor);
+  outline: none;
+  box-shadow: 0 0 6px #4920ff;
 }
 /** Icon buttons */
 button.icon {
@@ -116,7 +122,6 @@ form{
     width: 100%;
     display: flex;
   flex-flow: column;
-  margin-bottom: 36px;
 }
 div.wrapper > h2{
     align-self: flex-start;
@@ -131,21 +136,31 @@ form > label{
 form > input[type="email"],
 form > input[type="password"],
 form > input[type="text"] {
+  padding: 6px;
   margin-bottom: 12px;
   width: 100%;
   align-self: center;
   border: none;
   border-radius: 3px;
-  border-bottom: var(--accentColor) solid 6px;
+  border-bottom: #4920ff solid 6px;
+  background: #9bbbff;
+  color: white;
+
+  
 }
 /************ Header ************/
 header {
-  background: var(--mainColor);
+  background:#4920ff;
+  height: 56px;
+}
+header h1{
+  margin: 12px 0;
+  color: #fff;
 }
 header .wrapper {
   justify-content: space-between;
   align-items: center;
-  background: var(--mainColor);
+  color: #fff;
 }
 header span {
   font-size: 90px;
@@ -180,6 +195,11 @@ article#login > .wrapper {
   flex-flow: column;
   align-items: center;
 }
-
+div.g-signin2{
+  width: 100%;
+}
+div.g-signin2 div{
+  border-radius: 6px;
+}
 /**************/
 
