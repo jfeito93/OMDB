@@ -52,22 +52,17 @@ exports.signIn = async (req, res) => {
 
   //? Algo parecido a (`SELECT * FROM users WHERE email=${req.body.email}`)
   const user = await sql.users(req.body.data.email);
-  console.log(user);
   //const user = await users.find((u) => u.email === req.body.data.email);
   //* Si el user existe en la base de datos y ha pasado contraseña correcta por el request
   if (user && req.body.data.pw === user.pw) {
     //TODO Login correcto, generar token con JWT y cookie de sesión
-    const token = jwt.sign(
-      {
-        email: user.email,
-        role: user.role,
-      },
-      process.env.TOKEN_SECRET
-    );
-    res
-      .cookie("aCookie", token, {
-        maxAge: 900000,
-        httpOnly: true,
+    const token = jwt.sign({
+      email: user.email,
+      role: user.role
+    }, process.env.TOKEN_SECRET);
+    res.cookie("aCookie", token, {
+        maxAge: 60 * 60 * 24 * 5 * 1000,
+        httpOnly: true
       })
       .status(200)
       .json({
