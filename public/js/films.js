@@ -1,7 +1,12 @@
-//? GET a peliculas asociadas a usuario/admin
-//fetch(/movies)
-//  .then( res => res.json())
-//  .then( movies => movies.map(movie => {
-        //?Por cada película creamos un elemento que se va a apendear a main
-        //? Pasamos res.json al PUG y que lo hinche el desde routes.js    
-//}))
+const keyword = document.querySelector('div#search > input[type="text"]');
+const searchButton = document.querySelector('div#search > button');
+
+function search () {
+    if(keyword.value){
+        window.location.assign(`/search?s=${keyword.value}`)
+    }else{
+        window.location.assign('/search')
+    }
+}
+
+searchButton.addEventListener('click', search);

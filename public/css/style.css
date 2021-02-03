@@ -1,9 +1,18 @@
 /** Variable setup */
 :root {
+<<<<<<< HEAD
   /** Main Color*/
   --mainColor: #4920ff;
   /** BG color*/
   --bgColor: #e4efff;
+=======
+  /** Main color*/
+  --mainColor: #4920ff;
+  /** Card background*/
+  --cardColor:#e3e6eb;
+  /** BG color*/
+  --bgColor: #f7faff;
+>>>>>>> miguel-sprint3
   /** Accent Color */
   --accentColor: #dd0063;
   /** Accent Color  Hover*/
@@ -29,6 +38,9 @@ body {
   background: var(--bgColor);
 }
 /** Remove defauls anchor CSS */
+h5{
+  margin: 0;
+}
 a {
   text-decoration: none;
   color: var(--fontColor);
@@ -36,6 +48,7 @@ a {
 nav {
   transition: 0.25s;
   height: 6px;
+<<<<<<< HEAD
   overflow: hidden;
 }
 nav.open {
@@ -44,6 +57,18 @@ nav.open {
 }
 nav.admin.open {
   height: 32px;
+=======
+  overflow:hidden;
+  box-shadow: 0 2px 12px #00000040;
+  z-index: 2;
+}
+nav.open{
+  height:91px;
+  transition: 0.25s;
+}
+nav.admin.open{
+  height:31px;
+>>>>>>> miguel-sprint3
   transition: 0.25s;
 }
 nav ul {
@@ -103,6 +128,7 @@ input[type="text"]:focus {
   box-shadow: 0 0 6px var(--mainColor);
 }
 /** Icon buttons */
+<<<<<<< HEAD
 button.icon {
   padding: 0;
   background: var(--bgColor);
@@ -110,15 +136,26 @@ button.icon {
 button.icon > span.material-icons {
   color: var(--starDefault);
   padding: 6px;
+=======
+button.icon{
+  width: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+>>>>>>> miguel-sprint3
 }
-button.icon:hover > span.material-icons {
-  color: var(--starColorHover);
+#search{
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  align-items: center;
 }
-button.icon > span.material-icons.favourite {
-  color: var(--starColor);
+#search > input[type='text']{
+  width: 100%;
+  margin: 12px 0;
 }
-button.icon:hover > span.material-icons.favourite {
-  color: var(--starColorHover);
+#search  button.icon{
+  margin-right: 0;
 }
 form {
   width: 100%;
@@ -135,9 +172,9 @@ form > input[type="submit"] {
 form > label {
   margin: 6px;
 }
-form > input[type="email"],
-form > input[type="password"],
-form > input[type="text"] {
+input[type="email"],
+input[type="password"],
+input[type="text"] {
   padding: 6px;
   margin-bottom: 12px;
   width: 100%;
@@ -146,21 +183,32 @@ form > input[type="text"] {
   border-radius: 3px;
   border-bottom: var(--mainColor) solid 6px;
   background: #9bbbff;
+<<<<<<< HEAD
   color: white;
 }
 /************ Header ************/
 header {
   background: var(--mainColor);
+=======
+  color: var(--bgColor);
+
+  
+}
+/************ Header ************/
+header {
+  background:var(--mainColor);
+>>>>>>> miguel-sprint3
   height: 56px;
 }
 header h1 {
   margin: 12px 0;
-  color: #fff;
+  color:var(--bgColor);
 }
 header .wrapper {
   justify-content: space-between;
   align-items: center;
-  color: #fff;
+  color:var(--bgColor);
+  font-family:'Press Start 2P', cursive;
 }
 header span {
   font-size: 90px;
@@ -177,6 +225,49 @@ nav ul {
 /************ Main Content ******/
 main {
   width: 100%;
+  padding: 24px 0;
+}
+main .wrapper{
+  flex-direction: column;
+}
+main img{
+  width:40%;
+  border-radius: 12px 0 0 12px;
+  box-shadow: 0 12px 12px #00000040;
+}
+main > section .wrapper a{
+  display: flex;
+  flex-flow: row nowrap;
+  margin-bottom: 12px;  
+  border-radius: 12px;
+}
+main > section .wrapper  a > div:first-of-type{
+  width: 60%;
+  border-radius: 0 12px 12px 0;
+  padding: 12px 24px;
+  background: var(--cardColor);
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  box-shadow: 0 12px 12px #00000040;
+  
+}
+div.dockbutton{
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+button.dock{
+  width: 24px;
+  background: transparent;
+  padding: 0px;
+  box-shadow: 0 0 0 transparent;
+  margin: 0;
+  margin-right: 12px;
+}
+button.dock  span.material-icons{
+  margin: 0;
+  color: var(--accentColor);
 }
 article {
   margin: 0;
