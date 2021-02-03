@@ -20,10 +20,14 @@ routes.get("/", movies.claims, movies.getDashBoard);
 routes.get("/search", movies.claims, movies.getMovies);
 //* Búsqueda por título de pelicula existente en la app tanto para usuario como administrador
 
+//Protegida (Admin)
+routes.get('/createMovie', movies.claims, movies.getNewMovie);
+//* Adición de una nueva pelicula a la app
+
 //Protegida (User)
 //Llevar a la vista de detalles de la pelicula buscada
 //Protegida (User)
-routes.get("/search/:title", movies.claims, movies.getMovieDetails); //* Llevar a la vista de detalles de la pelicula buscada
+routes.get("/search/:title", movies.claims, movies.getAllMovies); //* Llevar a la vista de detalles de la pelicula buscada
 //Protegida (User & Admin)
 routes.get("/movies", movies.claims, movies.getMyMovies); //* Llevar a la lista personalizada del USUARIO de sus peliculas guardadas
 //Protegida (Both)

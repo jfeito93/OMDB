@@ -1,89 +1,112 @@
 const auth = require("./auth");
-db = require("../models/mngdb");
+(mongo = require("../models/mongo")), (sql = require("../models/sql"));
+const fetch = require("node-fetch");
 
 //GET Petitions
-exports.getDashBoard = (req, res) => {
+exports.getDashBoard = async (req, res) => {
   if (req.role === "user") {
-    res.status(200).render("dashboard", { menu: true, admin: false});
+    res.status(200).render("dashboard", { menu: true, admin: false });
   } else {
-    res.status(403).redirect('/movies');
+    res.status(403).redirect("/movies");
   }
 };
 
-//? mngdb.js READ
+//? mngmongo.js READ
 //! MongoDB
-exports.getMovieDetails = async (req, res) => {
-  let lectura = await db.readFilmDetails(req.params.Title);
+exports.getAllMovies = async (req, res) => {
+  let lectura = await mongo.readAllMovies(req.params.title);
   res.status(200).json({ status: "Film details achieved!", data: { lectura } });
-  if (req.role === 'user') {
-    console.log(req.params.id);
-    let result = await db.readFilmDetails(req.params.id);
-    res
-      .status(200)
-      .json({
-        status: "Film achieved!",
-        data: result, // JSON.stringify(result)
-        id: result.id,
-      });
+  if (req.role === "user") {
+    console.log(req.params.title);
+    let result = await mongo.readAllMovies(req.params.title);
+    res.status(200).json({
+      status: "Film achieved!",
+      data: result, // JSON.stringify(result)
+      title: result.title,
+    });
   } else {
-    res.status(403).redirect('/movies');
+    res.status(403).redirect("/movies");
   }
 };
 exports.getMovies = async (req, res) => {
   if (req.role == "admin") {
+    //* Saca TODAS las peliculas de Mongo
+    let data = await mongo.readAllMovies();
     res.status(200).render("movies", {
-      title: 'Admin',
+      title: "Admin",
       menu: true,
-      admin: true
+      admin: true,
+      "data": data
     }); //! render('movies', JSON de usuario)
   } else if (req.role == "user") {
-    res.status(200).render('movies', {
-      title: 'User',
+    //* Haz un fetch a la API http://www.omdbapi.com/?s=${req.params.title}
+    //*Cuando lo tengas mira
+    //? El JSON trae un array de resultados?
+    //* LLena content
+    //? ELSE IF Si no, un GET a Mongo
+    mongo.getAllMovies(req.params.title);
+    //*LLenar content
+    //? ELSE
+    //* content = "No se han encontrado peliculas"
+    res.status(200).render("movies", {
+      title: "User",
       menu: true,
-      admin: false
+      admin: false,
     }); //! render('movies', JSON de admin)
-  }; //? ¿? - ('movies') o ('search')  - ¿Un pug para la lista de pelis del usuario y otro pug para todas las peliculas contenidas en la app?
+  } //? ¿? - ('movies') o ('search')  - ¿Un pug para la lista de pelis del usuario y otro pug para todas las peliculas contenidas en la app?
 };
 exports.getMyMovies = async (req, res) => {
   if (req.role == "admin") {
     res.status(200).render("movies", {
-      title: 'Admin',
+      title: "Admin",
       menu: true,
-      admin: true
+      admin: true,
     }); //! render('movies', JSON de usuario)
   } else if (req.role == "user") {
-    res.status(200).render('movies', {
+    //* Array con las URL a cada sitio
+    let urls = await sql.favorites(req.email);
+    console.log(urls);
+    //*Iterar el Array
+    let content = await urls.map((url) => {
+      if (url.startsWith("http://www.omdbapi.com")) {
+        return fetch(`${url}&apiKey=${process.env.APIKEY}`).then((res) =>
+          res.json()
+        );
+      } else {
+        return mongo.readFilmDetails(url);
+      }
+    });
+    res.json(await content[2]);
+    //Si es de mongo hacer peticiones a Mongo
+    // Si es de la APi, hacer peticiones a la api
+    //* Lanzar peticiones a Mongo y a la API
+    /*  res.status(200).render('movies', {
       title: 'User',
       menu: true,
-      admin: false
-    }); //! render('movies', JSON de admin)
-  };
+      admin: false,
+      content: await content
+    }); //! render('movies', JSON de admin) */
+  }
   //? ¿? - ('movies') o ('search') - ¿Un pug para la lista de pelis del usuario y otro pug para todas las peliculas contenidas en la app?
 };
 exports.getLogIn = (req, res) => {
   if (req.cookies.aCookie || req.cookies.gCookie) {
-    res.status(403).redirect('/');
+    res.status(403).redirect("/");
   } else {
-    res.status(200).render('login', {menu: false});
+    res.status(200).render("login", {
+      menu: false,
+    });
   }
-
-}
+};
 exports.getLogOut = (req, res) => {
   if (req.cookies.aCookie) {
-    res.status(200)
-      .clearCookie('aCookie')
-      .render('index', {menu: false})
-
+    res.status(200).clearCookie("aCookie").render("index", { menu: false });
   } else if (req.cookies.gCookie) {
-    res.status(200)
-      .clearCookie('gCookie')
-      .render('index', {menu: false})
+    res.status(200).clearCookie("gCookie").render("index", { menu: false });
   } else {
-    res.status(403)
-      .redirect('/login')
+    res.status(403).redirect("/login");
   }
-
-}
+};
 //POST petitions:
 
 // 1. exports.postLogIn
@@ -113,12 +136,18 @@ exports.claims = (req, res, next) => auth.checkToken(req, res, next);
 
 //? mngdb.js CREATE
 //! MongoDB
+exports.getNewMovie = async (req, res) => {
+  if (req.role === "admin") {
+    res.status(200).render("/createMovie", { menu: true, admin: true });
+  } else {
+    res.status(403).redirect("/movies");
+  }
+};
+
 exports.postNewMovie = async (req, res) => {
   console.log(req.body);
-  let result = await db.createAdminMovie(req.body);
-  res
-    .status(200)
-    .redirect("/movies");;
+  let result = await mongo.createAdminMovie(req.body);
+  res.status(200).render("/movies");
 };
 
 //PUT petitions
@@ -128,7 +157,7 @@ exports.postNewMovie = async (req, res) => {
 //* mngdb.js UPDATE
 exports.putMovieDetails = async (req, res) => {
   console.log(req.body.id);
-  let modification = await db.updateFilmDetails(req.body.id);
+  let modification = await mongo.updateFilmDetails(req.body.id);
   res
     .status(200)
     .json({ status: "Film value/values updated", data: { modification } });
@@ -138,7 +167,7 @@ exports.putMovieDetails = async (req, res) => {
 //* mngdb.js DELETE VALUE/VALUES FROM DOCUMENT
 exports.deleteMovieDetails = async (req, res) => {
   console.log(req.body.id);
-  let valueElimination = await db.deleteFilmDetails(req.body.id);
+  let valueElimination = await mongo.deleteFilmDetails(req.body.id);
   res
     .status(200)
     .json({ status: "Film value/values deleted", data: { valueElimination } });

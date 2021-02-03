@@ -1,6 +1,6 @@
 const MongoClient = require("mongodb").MongoClient;
 const url = "mongodb://localhost:27017/";
-// const ObjectId = require("mongodb").ObjectID;
+const ObjectId = require("mongodb").ObjectID;
 
 async function connection() {
   const client = await MongoClient(url, { useUnifiedTopology: true });
@@ -17,7 +17,7 @@ async function connection() {
 // AGREGAR UNA PELICULA A LA COLECCIÓN DE PELICULAS DE LA BASE DE DATOS CREADA EN MONGODB:
 exports.createAdminMovie = async () => {
   const client = await connection(); // Devuelve el objeto de conexion a la BBDD
-  const result = await client.db("OMDB").collection("AdminFilmList").insertOne({
+  const result = await client.db("omdb").collection("movies").insertOne({
     Title: "Bbbb",
     Year: "1998",
     Rated: "+16",
@@ -44,8 +44,8 @@ exports.createAdminMovie = async () => {
 exports.createAdminMovies = async () => {
   const client = await connection(); // Devuelve el objeto de conexion a la BBDD
   const result = await client
-    .db("OMDB")
-    .collection("AdminFilmList")
+    .db("omdb")
+    .collection("movies")
     .insertMany([
       {
         Title: "Aaaa",
@@ -100,26 +100,44 @@ exports.createAdminMovies = async () => {
 //exports.createAdminMovies();
 
 // READ
-exports.readFilmDetails = async () => {
+//readFilmDetails muestra todas las pelis mongo si no se introduce nada en la busqueda y si se introduce algo busca por los caracteres introducidos en relacion
+exports.readAllMovies = async (title) => {
+  let condition = `${/^$/}`; //si no se quiere usar la regex pues = ""
+
+  if (title) {
+    condition = { Title: new RegExp("^" + title, "i") };
+  }
   let client = await connection();
   const result = await client
-    .db("OMDB")
-    .collection("AdminFilmList")
-    .find({ Title: { $regex: /c/ } }) //* busqueda de todas aquellas peliculas que incluyan una "c" en su Title
+    .db("omdb")
+    .collection("movies")
+    .find(condition)
     .toArray();
-  //si antes = .find(***) - En el caso de usar findOne(), este ya lo convierte automaticamente en un array
   console.log(result);
   return result;
 };
-// READ FILM FROM THE INTRODUCED DATA IN THE .find()
-//exports.readFilmDetails();
+//exports.readAllMovies();
+
+exports.getMoviesById = async (id) => {
+  let objetId1 = new ObjectId(id);
+  let client = await connection();
+  const result = await client
+    .db("omdb")
+    .collection("movies")
+    .find({ _id: objetId1 })
+    .toArray();
+  console.log(result);
+  return result;
+};
+//exports.getMoviesById("601ab13b295c8159cc461dca");
+
 
 // MODIFICAR VALORES DE UNA PELICULA DE LA COLECCIÓN DE PELICULAS DE LA BASE DE DATOS CREADA EN MONGODB:
 exports.updateFilmDetails = async () => {
   let client = await connection();
   const result = await client
-    .db("OMDB")
-    .collection("AdminFilmList")
+    .db("omdb")
+    .collection("movies")
     .updateOne({ Title: "Cccc" }, { $set: { Year: "2018", Genre: "Drama" } });
   console.log("Listing values updated");
   return result;
@@ -131,8 +149,8 @@ exports.updateFilmDetails = async () => {
 exports.deleteFilmDetails = async () => {
   let client = await connection();
   const result = await client
-    .db("OMDB")
-    .collection("AdminFilmList")
+    .db("omdb")
+    .collection("movies")
     .updateOne(
       { Title: "Bbbb" },
       { $unset: { Rated: "+16", Runtime: "90 min" } }
@@ -147,8 +165,8 @@ exports.deleteFilmDetails = async () => {
 exports.deleteFilm = async () => {
   let client = await connection();
   const result = await client
-    .db("OMDB")
-    .collection("AdminFilmList")
+    .db("omdb")
+    .collection("movies")
     .deleteOne({ Title: "Bbbb" });
   console.log("Listing deleted");
   return result;

@@ -1,7 +1,9 @@
 /** Variable setup */
 :root {
+  /** Main Color*/
+  --mainColor: #4920ff;
   /** BG color*/
-  --mainColor: #e4efff;
+  --bgColor: #e4efff;
   /** Accent Color */
   --accentColor: #dd0063;
   /** Accent Color  Hover*/
@@ -24,32 +26,32 @@
 body {
   font-family: var(--mainFont);
   color: var(--fontColor);
-  background: var(--mainColor);
+  background: var(--bgColor);
 }
 /** Remove defauls anchor CSS */
 a {
   text-decoration: none;
   color: var(--fontColor);
 }
-nav{
+nav {
   transition: 0.25s;
   height: 6px;
-  overflow:hidden;
+  overflow: hidden;
 }
-nav.open{
-  height:96px;
+nav.open {
+  height: 96px;
   transition: 0.25s;
 }
-nav.admin.open{
-  height:32px;
+nav.admin.open {
+  height: 32px;
   transition: 0.25s;
 }
-nav  ul{
+nav ul {
   list-style: none;
   width: 100%;
   margin: 0;
 }
-nav ul li{
+nav ul li {
   text-indent: 0;
   text-justify: right;
   width: 100%;
@@ -59,7 +61,7 @@ nav ul li{
 nav .wrapper {
   justify-content: flex-end;
 }
-ul li:nth-child(even){
+ul li:nth-child(even) {
   background: var(--accentColorHover);
 }
 /** Wrapper defaults */
@@ -81,7 +83,7 @@ input[type="submit"] {
   margin: 12px;
   text-transform: uppercase;
   font-family: var(--mainFont);
-  color: var(--mainColor);
+  color: var(--bgColor);
 }
 button:hover,
 input[type="submit"]:hover {
@@ -89,21 +91,21 @@ input[type="submit"]:hover {
 }
 button:active,
 input[type="submit"]:active {
-  background: var(--mainColor);
+  background: var(--bgColor);
   color: var(--accentColorHover);
 }
 button:focus,
-input[type="submit"]:focus, 
+input[type="submit"]:focus,
 input[type="email"]:focus,
 input[type="password"]:focus,
 input[type="text"]:focus {
   outline: none;
-  box-shadow: 0 0 6px #4920ff;
+  box-shadow: 0 0 6px var(--mainColor);
 }
 /** Icon buttons */
 button.icon {
   padding: 0;
-  background: var(--mainColor);
+  background: var(--bgColor);
 }
 button.icon > span.material-icons {
   color: var(--starDefault);
@@ -118,19 +120,19 @@ button.icon > span.material-icons.favourite {
 button.icon:hover > span.material-icons.favourite {
   color: var(--starColorHover);
 }
-form{
-    width: 100%;
-    display: flex;
+form {
+  width: 100%;
+  display: flex;
   flex-flow: column;
 }
-div.wrapper > h2{
-    align-self: flex-start;
+div.wrapper > h2 {
+  align-self: flex-start;
 }
 form > input[type="submit"] {
-  align-self:flex-end;
-  margin-right:0 ;
+  align-self: flex-end;
+  margin-right: 0;
 }
-form > label{
+form > label {
   margin: 6px;
 }
 form > input[type="email"],
@@ -142,18 +144,16 @@ form > input[type="text"] {
   align-self: center;
   border: none;
   border-radius: 3px;
-  border-bottom: #4920ff solid 6px;
+  border-bottom: var(--mainColor) solid 6px;
   background: #9bbbff;
   color: white;
-
-  
 }
 /************ Header ************/
 header {
-  background:#4920ff;
+  background: var(--mainColor);
   height: 56px;
 }
-header h1{
+header h1 {
   margin: 12px 0;
   color: #fff;
 }
@@ -167,7 +167,7 @@ header span {
   cursor: pointer;
 }
 /************ Nav ***************/
-nav  ul  li{
+nav ul li {
   text-align: right;
   overflow: hidden;
 }
@@ -181,7 +181,7 @@ main {
 article {
   margin: 0;
   width: 100%;
-  background: var(--mainColor);
+  background: var(--bgColor);
 }
 article > .wrapper {
   justify-content: center;
@@ -195,11 +195,10 @@ article#login > .wrapper {
   flex-flow: column;
   align-items: center;
 }
-div.g-signin2{
+div.g-signin2 {
   width: 100%;
 }
-div.g-signin2 div{
+div.g-signin2 div {
   border-radius: 6px;
 }
 /**************/
-
