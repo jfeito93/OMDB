@@ -1,7 +1,11 @@
 /** Variable setup */
 :root {
+  /** Main color*/
+  --mainColor: #4920ff;
+  /** Card background*/
+  --cardColor:#e3e6eb;
   /** BG color*/
-  --mainColor: #e4efff;
+  --bgColor: #f7faff;
   /** Accent Color */
   --accentColor: #dd0063;
   /** Accent Color  Hover*/
@@ -24,9 +28,12 @@
 body {
   font-family: var(--mainFont);
   color: var(--fontColor);
-  background: var(--mainColor);
+  background: var(--bgColor);
 }
 /** Remove defauls anchor CSS */
+h5{
+  margin: 0;
+}
 a {
   text-decoration: none;
   color: var(--fontColor);
@@ -35,13 +42,15 @@ nav{
   transition: 0.25s;
   height: 6px;
   overflow:hidden;
+  box-shadow: 0 2px 12px #00000040;
+  z-index: 2;
 }
 nav.open{
-  height:96px;
+  height:91px;
   transition: 0.25s;
 }
 nav.admin.open{
-  height:32px;
+  height:31px;
   transition: 0.25s;
 }
 nav  ul{
@@ -81,7 +90,7 @@ input[type="submit"] {
   margin: 12px;
   text-transform: uppercase;
   font-family: var(--mainFont);
-  color: var(--mainColor);
+  color: var(--bgColor);
 }
 button:hover,
 input[type="submit"]:hover {
@@ -89,7 +98,7 @@ input[type="submit"]:hover {
 }
 button:active,
 input[type="submit"]:active {
-  background: var(--mainColor);
+  background: var(--bgColor);
   color: var(--accentColorHover);
 }
 button:focus,
@@ -98,25 +107,27 @@ input[type="email"]:focus,
 input[type="password"]:focus,
 input[type="text"]:focus {
   outline: none;
-  box-shadow: 0 0 6px #4920ff;
+  box-shadow: 0 0 6px var(--mainColor);
 }
 /** Icon buttons */
-button.icon {
-  padding: 0;
-  background: var(--mainColor);
+button.icon{
+  width: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-button.icon > span.material-icons {
-  color: var(--starDefault);
-  padding: 6px;
+#search{
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  align-items: center;
 }
-button.icon:hover > span.material-icons {
-  color: var(--starColorHover);
+#search > input[type='text']{
+  width: 100%;
+  margin: 12px 0;
 }
-button.icon > span.material-icons.favourite {
-  color: var(--starColor);
-}
-button.icon:hover > span.material-icons.favourite {
-  color: var(--starColorHover);
+#search  button.icon{
+  margin-right: 0;
 }
 form{
     width: 100%;
@@ -133,34 +144,35 @@ form > input[type="submit"] {
 form > label{
   margin: 6px;
 }
-form > input[type="email"],
-form > input[type="password"],
-form > input[type="text"] {
+input[type="email"],
+input[type="password"],
+input[type="text"] {
   padding: 6px;
   margin-bottom: 12px;
   width: 100%;
   align-self: center;
   border: none;
   border-radius: 3px;
-  border-bottom: #4920ff solid 6px;
+  border-bottom: var(--mainColor) solid 6px;
   background: #9bbbff;
-  color: white;
+  color: var(--bgColor);
 
   
 }
 /************ Header ************/
 header {
-  background:#4920ff;
+  background:var(--mainColor);
   height: 56px;
 }
 header h1{
   margin: 12px 0;
-  color: #fff;
+  color:var(--bgColor);
 }
 header .wrapper {
   justify-content: space-between;
   align-items: center;
-  color: #fff;
+  color:var(--bgColor);
+  font-family:'Press Start 2P', cursive;
 }
 header span {
   font-size: 90px;
@@ -177,11 +189,54 @@ nav ul {
 /************ Main Content ******/
 main {
   width: 100%;
+  padding: 24px 0;
+}
+main .wrapper{
+  flex-direction: column;
+}
+main img{
+  width:40%;
+  border-radius: 12px 0 0 12px;
+  box-shadow: 0 12px 12px #00000040;
+}
+main > section .wrapper a{
+  display: flex;
+  flex-flow: row nowrap;
+  margin-bottom: 12px;  
+  border-radius: 12px;
+}
+main > section .wrapper  a > div:first-of-type{
+  width: 60%;
+  border-radius: 0 12px 12px 0;
+  padding: 12px 24px;
+  background: var(--cardColor);
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  box-shadow: 0 12px 12px #00000040;
+  
+}
+div.dockbutton{
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+button.dock{
+  width: 24px;
+  background: transparent;
+  padding: 0px;
+  box-shadow: 0 0 0 transparent;
+  margin: 0;
+  margin-right: 12px;
+}
+button.dock  span.material-icons{
+  margin: 0;
+  color: var(--accentColor);
 }
 article {
   margin: 0;
   width: 100%;
-  background: var(--mainColor);
+  background: var(--bgColor);
 }
 article > .wrapper {
   justify-content: center;

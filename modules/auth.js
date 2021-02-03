@@ -1,31 +1,10 @@
 const jwt = require("jsonwebtoken");
 const admin = require('firebase-admin');
 const serviceAccount = require("../config/config");
+const sql = require("../models/sql");
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
-const users = [{
-    email: "migueltafmart@gmail.com",
-    pw: "1234",
-    role: "admin",
-  },
-  {
-    email: "javierfeito1993@gmail.com",
-    pw: "4321",
-    role: "admin",
-  },
-  {
-    email: "silvialcastilla@gmail.com",
-    pw: "0000",
-    role: "user",
-  },
-  {
-    email: "luciadeveloper@gmail.com",
-    pw: "6969",
-    role: "user",
-  }
-];
-
 
 // * Si el usuario ha hecho login con contraseña y usuario, usar JWT
 //*Esta función se va a ejecutar en routes.js, en las rutas protegidas
@@ -70,7 +49,8 @@ exports.signIn = async (req, res) => {
   // TODO QUERY a la BBDD SQL 
 
   //? Algo parecido a (`SELECT * FROM users WHERE email=${req.body.email}`)
-  const user = await users.find((u) => u.email === req.body.data.email);
+  const user = await sql.users(req.body.data.email);
+  //const user = await users.find((u) => u.email === req.body.data.email);
   //* Si el user existe en la base de datos y ha pasado contraseña correcta por el request
   if (user && (req.body.data.pw === user.pw)) {
     //TODO Login correcto, generar token con JWT y cookie de sesión
@@ -79,7 +59,7 @@ exports.signIn = async (req, res) => {
       role: user.role
     }, process.env.TOKEN_SECRET);
     res.cookie("aCookie", token, {
-        maxAge: 900000,
+        maxAge: 60 * 60 * 24 * 5 * 1000,
         httpOnly: true
       })
       .status(200)
@@ -135,7 +115,6 @@ exports.signIn = async (req, res) => {
                   })
               }))
           })
-
       }).catch(err => console.log(err))
 
   //*Si el usuario no existe en la base de datos

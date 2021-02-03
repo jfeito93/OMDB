@@ -4,11 +4,50 @@ html(lang='en')
     body
         include header
         main
-            .wrapper
-                p=title
-            //each movie in data.Search
-                div
-                    .wrapper
-                        p=movie.Title
+            if search
+                .wrapper
+                    #search
+                        input(type='text')
+                        button.icon 
+                            span.material-icons search
+            if data
+                if !data.Search
+                    each movie in data
+                        if admin
+                            .wrapper
+                                button Create a movie
+                        section
+                            .wrapper
+                                a
+                                    img(src=movie.Poster)
+                                    div
+                                        h3=movie.Title 
+                                            span (#{movie.Year})
+                                        h5= movie.Director
+                                        p=movie.Runtime
+                                        div.buttonDock
+                                            if admin
+                                                button.dock(href='/favorites' value=movie.imdbID)
+                                                    span.material-icons create
+                                            if admin
+                                                button.dock(href='/favorites' value=movie.imdbID)
+                                                    span.material-icons delete
+                                            if !admin
+                                                button.dock(href='/favorites' value=movie.imdbID)
+                                                    span.material-icons star
+                else if data.Search
+                    each movie in data.Search
+                        section
+                            .wrapper
+                                a
+                                    img(src=movie.Poster)
+                                    div 
+                                        h3=movie.Title 
+                                            span (#{movie.Year})
+                                        h5= movie.Director
+                                        p=movie.Runtime
+                                        .buttonDock
+                                            button.dock(value=movie.imdbID)
+                                                span.material-icons star_border
         script(defer, src='./js/films.js')
         

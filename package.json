@@ -9,6 +9,7 @@
     "express": "^4.17.1",
     "firebase-admin": "^9.4.2",
     "jsonwebtoken": "^8.5.1",
+    "mariadb": "^2.5.2",
     "mongodb": "^3.6.3",
     "node-fetch": "^2.6.1",
     "pug": "^3.0.0"

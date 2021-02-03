@@ -113,7 +113,14 @@ exports.readFilmDetails = async () => {
 };
 // READ FILM FROM THE INTRODUCED DATA IN THE .find()
 //exports.readFilmDetails();
-
+exports.getAllMovies = async (title) => {
+  let client = await connection();
+  return await client
+    .db("omdb")
+    .collection("admin")
+    .find({ Title: { $regex: new RegExp(`/${title}+/gi`) }}) //* busqueda de todas aquellas peliculas que incluyan una "c" en su Title
+    .toArray();
+}
 // MODIFICAR VALORES DE UNA PELICULA DE LA COLECCIÓN DE PELICULAS DE LA BASE DE DATOS CREADA EN MONGODB:
 exports.updateFilmDetails = async () => {
   let client = await connection();
