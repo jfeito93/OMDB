@@ -26,8 +26,8 @@ const checkMail = (event) => {
     checkPW(event);
   } else {
     //* Si el mail no es válido pedimos que se escriba de nuevo
-    //TODO esto hay que cambiarlo a CSS
-    console.log("El émail no es válido");
+      userEmail.classList.toggle('error');
+      userPW.classList.toggle('error');
   }
 };
 
@@ -53,15 +53,18 @@ const checkPW = (event) => {
         console.log(data);
         if (data.status) {
           window.location.assign('/');
-        }
-        //TODO instrucción al CSS
+        }else{
+          userEmail.classList.toggle('error');
+          userPW.classList.toggle('error');
+        }   
       })
       .catch((error) => console.error("Error:", error));
 
     //? Después del POST a /login res.redirect a /dashboard
   } else {
     //* Si la contraseña no es válida pedimos que la escriban de nuevo
-    console.log("Esccribe una contraseña");
+    userEmail.classList.toggle('error');
+    userPW.classList.toggle('error');
   }
 };
 

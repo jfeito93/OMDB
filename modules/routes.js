@@ -20,14 +20,10 @@ routes.get("/", movies.claims, movies.getDashBoard);
 routes.get("/search", movies.claims, movies.getMovies);
 //* Búsqueda por título de pelicula existente en la app tanto para usuario como administrador
 
-//Protegida (Admin)
-routes.get('/createMovie', movies.claims, movies.getNewMovie);
-//* Adición de una nueva pelicula a la app
-
 //Protegida (User)
 //Llevar a la vista de detalles de la pelicula buscada
 //Protegida (User)
-routes.get("/search/:title", movies.claims, movies.getAllMovies); //* Llevar a la vista de detalles de la pelicula buscada
+routes.get("/search/:title", movies.claims, movies.getMovieDetails); //* Llevar a la vista de detalles de la pelicula buscada
 //Protegida (User & Admin)
 routes.get("/movies", movies.claims, movies.getMyMovies); //* Llevar a la lista personalizada del USUARIO de sus peliculas guardadas
 //Protegida (Both)
@@ -43,11 +39,15 @@ routes.get("/logout", movies.claims, movies.getLogOut); //* Llevar a la lista pe
 routes.post('/createMovie', movies.postNewMovie);
 //* Adición de una nueva pelicula a la app
 
+routes.get('/createMovie', movies.claims, movies.getCreateMovie);
 
+routes.get('/editMovie/:id', movies.claims, movies.getEditMovie);
+
+routes.post('/createMovie', movies.claims, movies.postNewMovie);
 //PUT petitions
 //! MongoDB
 //Protegida (Admin)
-/* routes.put('/editMovie/:id', movies.putMovieDetails); */
+routes.put('/editMovie', movies.putMovieDetails);
 //* Edición de una pelicula y/o sus detalles ya existentes en la app
 
 

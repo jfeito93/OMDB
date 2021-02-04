@@ -1,18 +1,11 @@
 /** Variable setup */
 :root {
-<<<<<<< HEAD
-  /** Main Color*/
-  --mainColor: #4920ff;
-  /** BG color*/
-  --bgColor: #e4efff;
-=======
   /** Main color*/
   --mainColor: #4920ff;
   /** Card background*/
   --cardColor:#e3e6eb;
   /** BG color*/
   --bgColor: #f7faff;
->>>>>>> miguel-sprint3
   /** Accent Color */
   --accentColor: #dd0063;
   /** Accent Color  Hover*/
@@ -48,16 +41,6 @@ a {
 nav {
   transition: 0.25s;
   height: 6px;
-<<<<<<< HEAD
-  overflow: hidden;
-}
-nav.open {
-  height: 96px;
-  transition: 0.25s;
-}
-nav.admin.open {
-  height: 32px;
-=======
   overflow:hidden;
   box-shadow: 0 2px 12px #00000040;
   z-index: 2;
@@ -68,7 +51,6 @@ nav.open{
 }
 nav.admin.open{
   height:31px;
->>>>>>> miguel-sprint3
   transition: 0.25s;
 }
 nav ul {
@@ -128,21 +110,11 @@ input[type="text"]:focus {
   box-shadow: 0 0 6px var(--mainColor);
 }
 /** Icon buttons */
-<<<<<<< HEAD
-button.icon {
-  padding: 0;
-  background: var(--bgColor);
-}
-button.icon > span.material-icons {
-  color: var(--starDefault);
-  padding: 6px;
-=======
 button.icon{
   width: 5%;
   display: flex;
   justify-content: center;
   align-items: center;
->>>>>>> miguel-sprint3
 }
 #search{
   display: flex;
@@ -183,21 +155,15 @@ input[type="text"] {
   border-radius: 3px;
   border-bottom: var(--mainColor) solid 6px;
   background: #9bbbff;
-<<<<<<< HEAD
-  color: white;
-}
-/************ Header ************/
-header {
-  background: var(--mainColor);
-=======
   color: var(--bgColor);
-
-  
+}
+input.error{
+  border-bottom: var(--accentColor) solid 6px;
+  background: #ff9dc9;
 }
 /************ Header ************/
 header {
   background:var(--mainColor);
->>>>>>> miguel-sprint3
   height: 56px;
 }
 header h1 {
@@ -241,7 +207,7 @@ main > section .wrapper a{
   margin-bottom: 12px;  
   border-radius: 12px;
 }
-main > section .wrapper  a > div:first-of-type{
+main > section .wrapper  a  div:first-of-type{
   width: 60%;
   border-radius: 0 12px 12px 0;
   padding: 12px 24px;
@@ -257,7 +223,7 @@ div.dockbutton{
   justify-content: flex-end;
   width: 100%;
 }
-button.dock{
+a.dock{
   width: 24px;
   background: transparent;
   padding: 0px;
@@ -265,7 +231,7 @@ button.dock{
   margin: 0;
   margin-right: 12px;
 }
-button.dock  span.material-icons{
+a.dock  span.material-icons{
   margin: 0;
   color: var(--accentColor);
 }
