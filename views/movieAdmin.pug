@@ -6,29 +6,47 @@ html(lang='en')
         main
             article
                 .wrapper
-<<<<<<< HEAD
-                    form
-=======
-                    h2 #{accion} una película
-                    form 
->>>>>>> miguel-sprint3
-                        label(for='_title') Título 
-                        input(type='text', name='title', id='_title')
-                        label(for='_year') Año
-                        input(type='text', name='year', id='_year')
-                        label(for='_director') Director 
-                        input(type='text', name='director', id='_director')
-                        label(for='_cast') Reparto  
-                        input(type='text', name='cast', id='_cast')
-                        label(for='_genre') Género
-                        input(type='text', name='genre', id='_genre')
-                        label(for='_duration') Duración
-                        input(type='text', name='duration', id='_duration')
-                        label(for='_rating') Puntuación
-                        input(type='text', name='rating', id='_rating')
-                        label(for='_plot') Argumento
-                        input(type='text', name='plot', id='_plot')
-                        label(for='_img') Imagen
-                        input(type='file', name='img', id='_img')
-                        input(type='submit', value='Guardar')
-        script(defer, src='./js/movieAdmin.js')
+                    h2 #{action} una película
+                    if !content
+                        form 
+                            label(for='_title') Título 
+                            input(type='text', name='title', id='_title')
+                            label(for='_year') Año
+                            input(type='text', name='year', id='_year')
+                            label(for='_director') Director 
+                            input(type='text', name='director', id='_director')
+                            label(for='_cast') Reparto  
+                            input(type='text', name='cast', id='_cast')
+                            label(for='_genre') Género
+                            input(type='text', name='genre', id='_genre')
+                            label(for='_duration') Duración
+                            input(type='text', name='duration', id='_duration')
+                            label(for='_rating') Puntuación
+                            input(type='text', name='rating', id='_rating')
+                            label(for='_plot') Argumento
+                            input(type='text', name='plot', id='_plot')
+                            label(for='_img') Imagen (url)
+                            input(type='text', name='img', id='_img')
+                            input(type='submit', value='Guardar')
+                    else if content
+                        form 
+                            label(for='_title') Título 
+                            input(type='text', name='title', id='_title' value=content.Title)
+                            label(for='_year') Año
+                            input(type='text', name='year', id='_year' value=content.Year)
+                            label(for='_director') Director 
+                            input(type='text', name='director', id='_director' value=content.Director)
+                            label(for='_cast') Reparto  
+                            input(type='text', name='cast', id='_cast' value=content.Actors)
+                            label(for='_genre') Género
+                            input(type='text', name='genre', id='_genre' value=content.Genre)
+                            label(for='_duration') Duración
+                            input(type='text', name='duration', id='_duration' value=content.Runtime)
+                            label(for='_rating') Puntuación
+                            input(type='text', name='rating', id='_rating' value=content.imdbRating)
+                            label(for='_plot') Argumento
+                            input(type='text', name='plot', id='_plot' value=content.Plot)
+                            label(for='_img') Imagen (url)
+                            input(type='text', name='img', id='_img' value=content.Poster)
+                            input(type='submit', value='Guardar')    
+        script(defer, src=`/js/${src}.js`)

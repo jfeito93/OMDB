@@ -6,13 +6,20 @@ html(lang='en')
         main
             article
                 .wrapper
-                    img
-                    span rating
-                    h2 titulo (año)
-                    h4 director
-                    p genero
-                    p duracion
-                    p reparto
-                    p sinopsis
-                    a i añadir a favoritos
-        script(defer, src='./js/movie.js')   
+                    img(src=data.Poster)
+                    span
+                    h2=data.Title 
+                         span (#{data.Year})
+                    h4=data.Director
+                    p=data.Genre
+                    p=data.Runtime
+                    p=data.Actors
+                    p=data.Plot
+                    if data.imdbID
+                        a(href=`/search/${data.imdbID}`)
+                            span.material-icons star_border
+                    else
+                        a(href=`/search/${data._id}`)
+                            span.material-icons star_border
+
+        script(defer, src='/js/movie.js')   

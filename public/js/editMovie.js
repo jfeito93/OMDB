@@ -22,7 +22,7 @@ function check (e) {
   }
     fetch("http://localhost:3000/createMovie", {
         Accept: 'application/json',
-        method: "POST",
+        method: "PUT",
         body: JSON.stringify({
           Title: title.value,
           Year: year.value,
