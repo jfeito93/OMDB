@@ -16,7 +16,8 @@ exports.getDashBoard = async (req, res) => {
 
 //? mngmongo.js READ
 //! MongoDB
-exports.getAllMovies = async (req, res) => {
+exports.getMovieDetails = async (req, res) => {
+  if (){}
   let lectura = await mongo.readAllMovies(req.params.title);
   res.status(200).json({ status: "Film details achieved!", data: { lectura } });
   if (req.role === "user") {
@@ -37,10 +38,13 @@ exports.getMovies = async (req, res) => {
     res.status(200).render("movies", {
       menu: true,
       admin: true,
+      data: await mongo.readAllMovies(),
     }); //! render('movies', JSON de usuario)
   } else if (req.role == "user") {
     if (req.query.s) {
-      await fetch(`http://www.omdbapi.com/?s=${req.query.s}&t=movie&apiKey=${process.env.APIKEY}`)
+      await fetch(
+        `http://www.omdbapi.com/?s=${req.query.s}&apiKey=${process.env.APIKEY}`
+      )
         .then((res) => res.json())
         .then(async (data) => {
           console.log(data);
@@ -53,28 +57,32 @@ exports.getMovies = async (req, res) => {
               data: data,
             });
           } else {
-            mongo.readAllMovies(req.query.s).then((data) => {
-              if (data.length > 0) {
-                res.status(200).render("movies", {
-                  title: "User",
-                  menu: true,
-                  admin: false,
-                  search: true,
-                  data: data,
-                });
-              } else {
-                res.status(200).render("movies", {
-                  title: "User",
-                  menu: true,
-                  admin: false,
-                  search: true,
-                  data: "We didn't find any movies :C",
-                });
-              }
-            }).catch( err => console.error(err));
+            mongo
+              .readAllMovies(req.query.s)
+              .then((data) => {
+                if (data.length > 0) {
+                  res.status(200).render("movies", {
+                    title: "User",
+                    menu: true,
+                    admin: false,
+                    search: true,
+                    data: data,
+                  });
+                } else {
+                  res.status(200).render("movies", {
+                    title: "User",
+                    menu: true,
+                    admin: false,
+                    search: true,
+                    data: "We didn't find any movies :C",
+                  });
+                }
+              })
+              .catch((err) => console.error(err));
           }
-        }).catch( err => console.error(err));
-    }else{
+        })
+        .catch((err) => console.error(err));
+    } else {
       res.status(200).render("movies", {
         title: "User",
         menu: true,
@@ -95,15 +103,14 @@ exports.getMyMovies = async (req, res) => {
     }); //! render('movies', JSON de usuario)
   } else if (req.role == "user") {
     let urls = await sql.favorites(req.email);
-    console.log(urls);
     //*Iterar el Array
     let content = await urls.map(async (url) => {
       if (url.startsWith("http://www.omdbapi.com")) {
-        return await fetch(`${url}&t=movie&apiKey=${process.env.APIKEY}`)
+        return await fetch(`${url}&apiKey=${process.env.APIKEY}`)
           .then((resp) => resp.json())
           .then((data) => data);
       } else {
-        return await mongo.readAllMovies(url);
+        return await mongo.getMovieById(url);
       }
     });
     let datos = await Promise.all(content).catch((err) => console.error(err));
@@ -165,17 +172,30 @@ exports.claims = (req, res, next) => auth.checkToken(req, res, next);
 
 //? mngdb.js CREATE
 //! MongoDB
-exports.getNewMovie = async (req, res) => {
+exports.getCreateMovie = async (req, res) => {
   if (req.role === "admin") {
-    res.status(200).render("/createMovie", { menu: true, admin: true });
+    res
+      .status(200)
+      .render("movieAdmin", { menu: true, admin: true, method: "POST",action:"Crea" });
   } else {
-    res.status(403).redirect("/movies");
+    res.status(403).redirect("/");
+  }
+};
+
+exports.getEditMovie = async (req, res) => {
+  if (req.role === "admin") {
+    if mongo.getMovieById
+    res
+      .status(200)
+      .render("movieAdmin", { menu: true, admin: true, method: "PUT",action:"Edit" });
+  } else {
+    res.status(403).redirect("/");
   }
 };
 
 exports.postNewMovie = async (req, res) => {
   console.log(req.body);
-  let result = await mongo.createAdminMovie(req.body);
+  let result = await mongo.createMovie(req.body);
   res.status(200).render("/movies");
 };
 

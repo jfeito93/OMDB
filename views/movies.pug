@@ -12,10 +12,10 @@ html(lang='en')
                             span.material-icons search
             if data
                 if !data.Search
+                    if admin
+                        .wrapper
+                            button(onclick='window.location.assign("/createMovie")') Create a movie
                     each movie in data
-                        if admin
-                            .wrapper
-                                button Create a movie
                         section
                             .wrapper
                                 a
@@ -49,5 +49,4 @@ html(lang='en')
                                         .buttonDock
                                             button.dock(value=movie.imdbID)
                                                 span.material-icons star_border
-        script(defer, src='./js/films.js')
-        
+        script(defer, src='/js/films.js')

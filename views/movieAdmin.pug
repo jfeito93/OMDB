@@ -6,12 +6,8 @@ html(lang='en')
         main
             article
                 .wrapper
-<<<<<<< HEAD
-                    form
-=======
-                    h2 #{accion} una película
+                    h2 #{action} una película
                     form 
->>>>>>> miguel-sprint3
                         label(for='_title') Título 
                         input(type='text', name='title', id='_title')
                         label(for='_year') Año
@@ -31,4 +27,4 @@ html(lang='en')
                         label(for='_img') Imagen
                         input(type='file', name='img', id='_img')
                         input(type='submit', value='Guardar')
-        script(defer, src='./js/movieAdmin.js')
+        script(defer, src='/js/movieAdmin.js')

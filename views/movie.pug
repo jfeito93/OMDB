@@ -6,13 +6,15 @@ html(lang='en')
         main
             article
                 .wrapper
+                    if !content
                     img
                     span rating
-                    h2 titulo (año)
+                    h2 data.Title
+                        span {#data.year}
                     h4 director
                     p genero
                     p duracion
                     p reparto
                     p sinopsis
                     a i añadir a favoritos
-        script(defer, src='./js/movie.js')   
+        script(defer, src='/js/movie.js')   

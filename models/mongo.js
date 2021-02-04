@@ -1,7 +1,6 @@
 const MongoClient = require("mongodb").MongoClient;
 const url = "mongodb://localhost:27017/";
 const ObjectId = require("mongodb").ObjectID;
-
 async function connection() {
   const client = await MongoClient(url, { useUnifiedTopology: true });
   client
@@ -13,7 +12,6 @@ async function connection() {
 }
 // PROBAR LA CONEXION:
 //connection();
-
 // AGREGAR UNA PELICULA A LA COLECCIÓN DE PELICULAS DE LA BASE DE DATOS CREADA EN MONGODB:
 exports.createAdminMovie = async () => {
   const client = await connection(); // Devuelve el objeto de conexion a la BBDD
@@ -39,7 +37,6 @@ exports.createAdminMovie = async () => {
 };
 // CREATE FILM LISTING:
 //exports.createAdminMovie();
-
 // AGREGAR VARIAS PELICULAS A LA COLECCIÓN DE PELICULAS DE LA BASE DE DATOS CREADA EN MONGODB:
 exports.createAdminMovies = async () => {
   const client = await connection(); // Devuelve el objeto de conexion a la BBDD
@@ -98,12 +95,10 @@ exports.createAdminMovies = async () => {
 };
 // CREATE FILM LISTINGS:
 //exports.createAdminMovies();
-
 // READ
 //readFilmDetails muestra todas las pelis mongo si no se introduce nada en la busqueda y si se introduce algo busca por los caracteres introducidos en relacion
 exports.readAllMovies = async (title) => {
   let condition = `${/^$/}`; //si no se quiere usar la regex pues = ""
-
   if (title) {
     condition = { Title: new RegExp("^" + title, "i") };
   }
@@ -113,25 +108,19 @@ exports.readAllMovies = async (title) => {
     .collection("movies")
     .find(condition)
     .toArray();
-  console.log(result);
   return result;
 };
 //exports.readAllMovies();
-
-exports.getMoviesById = async (id) => {
+exports.getMovieById = async (id) => {
   let objetId1 = new ObjectId(id);
   let client = await connection();
   const result = await client
     .db("omdb")
     .collection("movies")
-    .find({ _id: objetId1 })
-    .toArray();
-  console.log(result);
+    .findOne({ _id: objetId1 })
   return result;
 };
 //exports.getMoviesById("601ab13b295c8159cc461dca");
-
-
 // MODIFICAR VALORES DE UNA PELICULA DE LA COLECCIÓN DE PELICULAS DE LA BASE DE DATOS CREADA EN MONGODB:
 exports.updateFilmDetails = async () => {
   let client = await connection();
@@ -144,7 +133,6 @@ exports.updateFilmDetails = async () => {
 };
 // UPDATE FILM LISTINGS VALUES:
 //exports.updateFilmDetails();
-
 // ELIMINAR VALORES DE UNA PELICULA DE LA COLECCIÓN DE PELICULAS DE LA BASE DE DATOS CREADA EN MONGODB:
 exports.deleteFilmDetails = async () => {
   let client = await connection();
@@ -160,7 +148,6 @@ exports.deleteFilmDetails = async () => {
 };
 // UPDATE FILM LISTINGS VALUES:
 //exports.deleteFilmDetails();
-
 // ELIMINAR UNA PELICULA DE LA COLECCIÓN DE PELICULAS DE LA BASE DE DATOS CREADA EN MONGODB:
 exports.deleteFilm = async () => {
   let client = await connection();
@@ -172,4 +159,3 @@ exports.deleteFilm = async () => {
   return result;
 };
 // DELETE FILM LISTING:
-//exports.deleteFilm();
