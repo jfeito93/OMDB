@@ -17,19 +17,32 @@ exports.getDashBoard = async (req, res) => {
 //? mngmongo.js READ
 //! MongoDB
 exports.getMovieDetails = async (req, res) => {
-  if (){}
-  let lectura = await mongo.readAllMovies(req.params.title);
-  res.status(200).json({ status: "Film details achieved!", data: { lectura } });
   if (req.role === "user") {
-    console.log(req.params.title);
-    let result = await mongo.readAllMovies(req.params.title);
-    res.status(200).json({
-      status: "Film achieved!",
-      data: result, // JSON.stringify(result)
-      title: result.title,
-    });
+    if (req.params.title && req.params.title.startsWith('tt')){
+      fetch(`http://www.omdbapi.com/?i=${req.params.title}&apiKey=${process.env.APIKEY}`)
+      .then(res => res.json())
+      .then( data =>  {
+        console.log(data);
+        res.status(200).render( 'movie',{
+          menu: true,
+          admin: false,
+          status: "Film achieved!",
+          data: data, // JSON.stringify(resulƒt)
+      });
+      });
+    } else if (req.params.title){
+        res.status(200).render( 'movie',{
+          menu: true,
+          admin: false,
+          status: "Film achieved!",
+          data: await mongo.getMovieById(req.params.title), // JSON.stringify(resulƒt)
+      });
+    }else{
+      res.status(403).redirect("/search")
+    }
+    
   } else {
-    res.status(403).redirect("/movies");
+    res.status(403).redirect("/search");
   }
 };
 exports.getMovies = async (req, res) => {
@@ -42,9 +55,7 @@ exports.getMovies = async (req, res) => {
     }); //! render('movies', JSON de usuario)
   } else if (req.role == "user") {
     if (req.query.s) {
-      await fetch(
-        `http://www.omdbapi.com/?s=${req.query.s}&apiKey=${process.env.APIKEY}`
-      )
+      await fetch(`http://www.omdbapi.com/?s=${req.query.s}&apiKey=${process.env.APIKEY}`)
         .then((res) => res.json())
         .then(async (data) => {
           console.log(data);
@@ -57,28 +68,26 @@ exports.getMovies = async (req, res) => {
               data: data,
             });
           } else {
-            mongo
-              .readAllMovies(req.query.s)
-              .then((data) => {
-                if (data.length > 0) {
-                  res.status(200).render("movies", {
-                    title: "User",
-                    menu: true,
-                    admin: false,
-                    search: true,
-                    data: data,
-                  });
-                } else {
-                  res.status(200).render("movies", {
-                    title: "User",
-                    menu: true,
-                    admin: false,
-                    search: true,
-                    data: "We didn't find any movies :C",
-                  });
-                }
-              })
-              .catch((err) => console.error(err));
+            mongo.readAllMovies(req.query.s).then((data) => {
+              if (data.length > 0) {
+                console.log(data);
+                res.status(200).render("movies", {
+                  title: "User",
+                  menu: true,
+                  admin: false,
+                  search: true,
+                  data: data,
+                });
+              } else {
+                res.status(200).render("movies", {
+                  title: "User",
+                  menu: true,
+                  admin: false,
+                  search: true,
+                  data: "We didn't find any movies :C",
+                });
+              }
+            }).catch( err => console.error(err));
           }
         })
         .catch((err) => console.error(err));
@@ -145,8 +154,11 @@ exports.getLogOut = (req, res) => {
 // 1. exports.postLogIn
 //? Validación de credenciales con algún tipo de redirecccion a auth.js - ¿?
 // abrir sesión y redirección a /dashboard si es Usuario, o /movies si es Administrador:
-exports.postFavorite = (req, res) => {
+exports.postFavorite = async (req, res) => {
   if (req.role == "user") {
+    
+    sql.postFavorite(req.email)
+
   }
 };
 // IDEA: quiero que al rellenar el formulario de la vista de login, si los datos introducidos coinciden con datos de user, la app se direccione a la vista de dashboard.pug y en caso de que esos datos coincidan con datos de admin, la app se direccione a la vista de movies.pug
@@ -174,20 +186,17 @@ exports.claims = (req, res, next) => auth.checkToken(req, res, next);
 //! MongoDB
 exports.getCreateMovie = async (req, res) => {
   if (req.role === "admin") {
-    res
-      .status(200)
-      .render("movieAdmin", { menu: true, admin: true, method: "POST",action:"Crea" });
+    res.status(200).render("movieAdmin", { menu: true, admin: true, method: "POST", action: "Crea", src:"movieAdmin" });
   } else {
     res.status(403).redirect("/");
   }
 };
-
 exports.getEditMovie = async (req, res) => {
   if (req.role === "admin") {
-    if mongo.getMovieById
-    res
-      .status(200)
-      .render("movieAdmin", { menu: true, admin: true, method: "PUT",action:"Edit" });
+      let content = await mongo.getMovieById(req.params.id);
+      console.log(req.params.id)
+
+    res.status(200).render("movieAdmin", { menu: true, admin: true, method: "PUT", action:"Edita", src:"editMovie", "content": content });
   } else {
     res.status(403).redirect("/");
   }
@@ -195,8 +204,8 @@ exports.getEditMovie = async (req, res) => {
 
 exports.postNewMovie = async (req, res) => {
   console.log(req.body);
-  let result = await mongo.createMovie(req.body);
-  res.status(200).render("/movies");
+  result = await mongo.createMovie(req.body);
+  res.status(200).render("movies");
 };
 
 //PUT petitions

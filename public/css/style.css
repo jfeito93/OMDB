@@ -156,8 +156,10 @@ input[type="text"] {
   border-bottom: var(--mainColor) solid 6px;
   background: #9bbbff;
   color: var(--bgColor);
-
-  
+}
+input.error{
+  border-bottom: var(--accentColor) solid 6px;
+  background: #ff9dc9;
 }
 /************ Header ************/
 header {
@@ -205,7 +207,7 @@ main > section .wrapper a{
   margin-bottom: 12px;  
   border-radius: 12px;
 }
-main > section .wrapper  a > div:first-of-type{
+main > section .wrapper  a  div:first-of-type{
   width: 60%;
   border-radius: 0 12px 12px 0;
   padding: 12px 24px;
@@ -221,7 +223,7 @@ div.dockbutton{
   justify-content: flex-end;
   width: 100%;
 }
-button.dock{
+a.dock{
   width: 24px;
   background: transparent;
   padding: 0px;
@@ -229,7 +231,7 @@ button.dock{
   margin: 0;
   margin-right: 12px;
 }
-button.dock  span.material-icons{
+a.dock  span.material-icons{
   margin: 0;
   color: var(--accentColor);
 }

@@ -43,7 +43,50 @@ exports.users = async (email) => {
     return payload;
   }
 };
-
+exports.postFavorite = async (email, datasource) => {
+    let conn;
+    let payload;
+    let userId = await this.userId(email);
+    try {
+        conn = await pool.getConnection();
+        res = await conn.query("INSERT INTO favorites (userID, datasource) VALUES (?,?);", [userId, datasource]);
+        console.log(res)
+        res = res
+                .filter(a => typeof a == "object")
+                .map(object => object.datasource);
+        payload = res;
+        console.log (res);
+    } catch (err) {
+        console.log(err);
+        payload = null;
+    } finally {
+        if (conn) conn.end();
+        console.log(payload);
+        return payload;
+    }
+}
+exports.deleteFavorite = async (email, datasource) => {
+    let conn;
+    let payload;
+    let userId = await this.userId(email);
+    try {
+        conn = await pool.getConnection();
+        res = await conn.query("DELETE FROM favorites WHERE userID=? AND datasource=? ;", [userId, datasource]);
+        console.log(res)
+        res = res
+                .filter(a => typeof a == "object")
+                .map(object => object.datasource);
+        payload = res;
+        console.log (res);
+    } catch (err) {
+        console.log(err);
+        payload = null;
+    } finally {
+        if (conn) conn.end();
+        console.log(payload);
+        return payload;
+    }
+}
 exports.favorites = async (email) => {
     let conn;
     let payload;
@@ -66,3 +109,4 @@ exports.favorites = async (email) => {
         return payload;
     }
 };
+
