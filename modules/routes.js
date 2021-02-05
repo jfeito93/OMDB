@@ -41,13 +41,13 @@ routes.post('/createMovie', movies.postNewMovie);
 
 routes.get('/createMovie', movies.claims, movies.getCreateMovie);
 
-routes.get('/editMovie/:id', movies.claims, movies.getEditMovie);
+routes.get('/settings/:id', movies.claims, movies.getSettings);
 
 routes.post('/createMovie', movies.claims, movies.postNewMovie);
 //PUT petitions
 //! MongoDB
 //Protegida (Admin)
-routes.put('/editMovie', movies.putMovieDetails);
+routes.put('/settings/:id', movies.putMovieDetails);
 //* Edición de una pelicula y/o sus detalles ya existentes en la app
 
 

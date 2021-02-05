@@ -3,9 +3,7 @@ const url = "mongodb://localhost:27017/";
 const ObjectId = require("mongodb").ObjectID;
 async function connection() {
   const client = await MongoClient(url, { useUnifiedTopology: true });
-  client
-    .connect()
-    .catch((e) => console.log(e));
+  client.connect().catch((e) => console.log(e));
   //console.log(client);
   return client;
 }
@@ -19,13 +17,10 @@ exports.createMovie = async ({
   Actors,
   Plot,
   Poster,
-  imdbRating
+  imdbRating,
 }) => {
   const client = await connection(); // Devuelve el objeto de conexion a la BBDD
-  const result = await client
-    .db("omdb")
-    .collection("movies")
-    .insertOne({
+  const result = await client.db("omdb").collection("movies").insertOne({
     Title: Title,
     Year: Year,
     Runtime: Runtime,
@@ -57,12 +52,12 @@ exports.readAllMovies = async (title) => {
 };
 //exports.readAllMovies();
 exports.getMovieById = async (id) => {
-  let objetId1 = new ObjectId(id);
+  let movieId = new ObjectId(id);
   let client = await connection();
   const result = await client
     .db("omdb")
     .collection("movies")
-    .findOne({ _id: objetId1 });
+    .findOne({ _id: movieId });
   return result;
 };
 //exports.getMoviesById("601ab13b295c8159cc461dca");
@@ -72,12 +67,13 @@ exports.updateFilmDetails = async (
   id,
   { Title, Year, Runtime, Genre, Director, Actors, Plot, Poster, imdbRating }
 ) => {
+  let movieId = new ObjectID(id);
   let client = await connection();
   const result = await client
     .db("omdb")
     .collection("movies")
     .updateOne(
-      { _id: id },
+      { _id: movieId },
       {
         $set: {
           Title: Title,
@@ -92,13 +88,12 @@ exports.updateFilmDetails = async (
         },
       }
     );
-  console.log("Listing values updated");
   return result;
 };
 // UPDATE FILM LISTINGS VALUES:
 //exports.updateFilmDetails();
 // ELIMINAR VALORES DE UNA PELICULA DE LA COLECCIÓN DE PELICULAS DE LA BASE DE DATOS CREADA EN MONGODB:
-exports.deleteFilmDetails = async () => {
+/* exports.deleteFilmDetails = async () => {
   let client = await connection();
   const result = await client
     .db("omdb")
@@ -109,16 +104,19 @@ exports.deleteFilmDetails = async () => {
     );
   console.log("Listing values updated");
   return result;
-};
+}; */
 // UPDATE FILM LISTINGS VALUES:
 //exports.deleteFilmDetails();
+
+
 // ELIMINAR UNA PELICULA DE LA COLECCIÓN DE PELICULAS DE LA BASE DE DATOS CREADA EN MONGODB:
-exports.deleteFilm = async () => {
+exports.deleteFilm = async (id) => {
+  let movieId = new ObjectId(id);
   let client = await connection();
   const result = await client
     .db("omdb")
     .collection("movies")
-    .deleteOne({ Title: "Bbbb" });
+    .deleteOne({ _id: movieId });
   console.log("Listing deleted");
   return result;
 };

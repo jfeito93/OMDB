@@ -20,7 +20,7 @@ function check (e) {
       return
     }
   }
-    fetch("http://localhost:3000/createMovie", {
+    fetch(`http://localhost:3000/editMovie/${_id}`, {
         Accept: 'application/json',
         method: "PUT",
         body: JSON.stringify({

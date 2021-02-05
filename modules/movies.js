@@ -49,6 +49,7 @@ exports.getMovies = async (req, res) => {
   if (req.role == "admin") {
     //* Saca TODAS las peliculas de Mongo
     res.status(200).render("movies", {
+      title: "Admin | My Movies",
       menu: true,
       admin: true,
       data: await mongo.readAllMovies(),
@@ -191,9 +192,11 @@ exports.getCreateMovie = async (req, res) => {
     res.status(403).redirect("/");
   }
 };
-exports.getEditMovie = async (req, res) => {
+exports.getSettings = async (req, res) => {
+  console.log("aaaaaaaaa")
+  console.log(req.params.id)
   if (req.role === "admin") {
-      let content = await mongo.getMovieById(req.params.id);
+      let content = await mongo.getMovieById(req.params.id);//content tiene _id
       console.log(req.params.id)
 
     res.status(200).render("movieAdmin", { menu: true, admin: true, method: "PUT", action:"Edita", src:"editMovie", "content": content });
@@ -214,8 +217,7 @@ exports.postNewMovie = async (req, res) => {
 //! Mongomongo
 //* mngmongo.js UPDATE
 exports.putMovieDetails = async (req, res) => {
-  console.log(req.body.id);
-  let modification = await mongo.updateFilmDetails(req.body.id);
+  let modification = await mongo.updateFilmDetails(req.params.id, req.body);
   res
     .status(200)
     .json({ status: "Film value/values updated", data: { modification } });
@@ -223,7 +225,7 @@ exports.putMovieDetails = async (req, res) => {
 
 //! Mongodb
 //* mngdb.js DELETE VALUE/VALUES FROM DOCUMENT
-exports.deleteMovieDetails = async (req, res) => {
+exports.deleteFilm = async (req, res) => {
   console.log(req.body.id);
   let valueElimination = await mongo.deleteFilmDetails(req.body.id);
   res
