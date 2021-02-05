@@ -20,7 +20,7 @@ function check (e) {
       return
     }
   }
-    fetch("http://localhost:3000/createMovie", {
+    fetch("http://localhost:3000/settings", {
         Accept: 'application/json',
         method: "POST",
         body: JSON.stringify({

@@ -14,88 +14,129 @@ html(lang='en')
                 if !data.Search
                     if admin
                         .wrapper
-                            button(onclick='window.location.assign("/createMovie")') Create a movie
+                            button(onclick='window.location.assign("/settings")') Create a movie
                     each movie in data
                         if movie.imdbID
                             section
                                 .wrapper
-                                    a(href=`/search/${movie.imdbID}`)
-                                        img(src=movie.Poster)
-                                        div
-                                            h3=movie.Title 
-                                                span (#{movie.Year})
-                                            h5= movie.Director
-                                            p=movie.Runtime
-                                            div.buttonDock
-                                                if admin
-                                                    a.dock(href=`/editMovie/${movie.imdbID}`)
-                                                        span.material-icons create
-                                                if admin    
-                                                    a.dock(href='/favorites' value=movie.imdbID)                                                                span.material-icons delete
-                                                if !admin
-                                                    a.dock(href='/favorites' value=movie.imdbID)
+                                    if !admin 
+                                        a(href=`/search/${movie.imdbID}`)
+                                            img(src=movie.Poster)
+                                    else if admin
+                                        a(href=`/settings/${movie.imdbID}`)
+                                            img(src=movie.Poster)
+                                    div
+                                        if !admin
+                                            a(href=`/search/${movie.imdbID}`)
+                                                h3=movie.Title 
+                                                    span (#{movie.Year})
+                                        else if admin
+                                            a(href=`/settings/${movie.imdbID}`)
+                                                h3=movie.Title 
+                                                    span (#{movie.Year})
+                                        h5=movie.Director
+                                        p=movie.Runtime
+                                        div.buttonDock
+                                            if admin
+                                                a.dock(href=`/settings/${movie.imdbID}`)
+                                                    span.material-icons settings
+                                            if !admin
+                                                a.dock(href='/favorites' value=movie.imdbID)
+                                                    if !search
                                                         span.material-icons star
+                                                    else if search
+                                                        span.material-icons star_border
                         else if !movie.imdbID       
                             section
                                 .wrapper
-                                    a(href=`/search/${movie._id}`)
-                                        img(src=movie.Poster)
-                                        div
-                                            h3=movie.Title 
-                                                span (#{movie.Year})
-                                            h5= movie.Director
-                                            p=movie.Runtime
-                                            div.buttonDock
-                                                if admin
-                                                    a.dock(href=`/editMovie/${movie._id}`)
-                                                        span.material-icons create
-                                                if admin    
-                                                    a.dock(href='/favorites' value=movie.imdbID)
-                                                        span.material-icons delete
-                                                if !admin
-                                                    a.dock(href='/favorites' value=movie.imdbID)
-                                                        span.material-icons star_border                      
+                                    if !admin 
+                                        a(href=`/search/${movie._id}`)
+                                            img(src=movie.Poster)
+                                    else if admin
+                                        a(href=`/settings/${movie._id}`)
+                                            img(src=movie.Poster)
+                                    div
+                                        if !admin
+                                            a(href=`/search/${movie._id}`)
+                                                h3=movie.Title 
+                                                    span (#{movie.Year})
+                                        else if admin
+                                            a(href=`/settings/${movie._id}`)
+                                                h3=movie.Title 
+                                                    span (#{movie.Year})
+                                        h5=movie.Director
+                                        p=movie.Runtime
+                                        div.buttonDock
+                                            if admin
+                                                a.dock(href=`/settings/${movie._id}`)
+                                                    span.material-icons settings
+                                            if !admin
+                                                a.dock(href='/favorites' value=movie._id)
+                                                    if !search
+                                                        span.material-icons star
+                                                    else if search
+                                                        span.material-icons star_border
                 else if data.Search
                     each movie in data.Search
                         if movie.imdbID
                             section
                                 .wrapper
-                                    a(href=`/search/${movie.imdbID}`)
-                                        img(src=movie.Poster)
-                                        div
-                                            h3=movie.Title 
-                                                span (#{movie.Year})
-                                            h5= movie.Director
-                                            p=movie.Runtime
-                                            div.buttonDock
-                                                if admin
-                                                    a.dock(href=`/editMovie/${movie.imdbID}`)
-                                                        span.material-icons create
-                                                if admin    
-                                                    a.dock(href='/favorites' value=movie.imdbID)
-                                                        span.material-icons delete
-                                                if !admin
-                                                    a.dock(href='/favorites' value=movie.imdbID)
+                                    if !admin 
+                                        a(href=`/search/${movie.imdbID}`)
+                                            img(src=movie.Poster)
+                                    else if admin
+                                        a(href=`/settings/${movie.imdbID}`)
+                                            img(src=movie.Poster)   
+                                    div
+                                        if !admin
+                                            a(href=`/search/${movie.imdbID}`)
+                                                h3=movie.Title 
+                                                    span (#{movie.Year})
+                                        else if admin
+                                            a(href=`/settings/${movie.imdbID}`)
+                                                h3=movie.Title 
+                                                    span (#{movie.Year})
+                                        h5=movie.Director
+                                        p=movie.Runtime
+                                        div.buttonDock
+                                            if admin
+                                                a.dock(href=`/settings/${movie.imdbID}`)
+                                                    span.material-icons settings
+                                            if !admin
+                                                a.dock(href='/favorites' value=movie.imdbID)
+                                                    if !search
                                                         span.material-icons star
+                                                    else if search
+                                                        span.material-icons star_border
                         else if !movie.imdbID       
                             section
                                 .wrapper
-                                    a(href=`/search/${movie._id}`)
-                                        img(src=movie.Poster)
-                                        div
-                                            h3=movie.Title 
-                                                span (#{movie.Year})
-                                            h5= movie.Director
-                                            p=movie.Runtime
-                                            div.buttonDock
-                                                if admin
-                                                    a.dock(onclick=`window.location.href='/editMovie/${movie._id}'`)
-                                                        span.material-icons create
-                                                if admin    
-                                                    a.dock(href='/favorites')
-                                                        span.material-icons delete
-                                                if !admin
-                                                   a.dock(href='/favorites')
+                                    if !admin 
+                                        a(href=`/search/${movie._id}`)
+                                            img(src=movie.Poster)
+                                    else if admin
+                                        a(href=`/settings/${movie._id}`)
+                                            img(src=movie.Poster)
+                                    div
+                                        if !admin
+                                            a(href=`/search/${movie._id}`)
+                                                h3=movie.Title 
+                                                    span (#{movie.Year})
+                                        else if admin
+                                            a(href=`/settings/${movie._id}`)
+                                                h3=movie.Title 
+                                                    span (#{movie.Year})
+                                        h5=movie.Director
+                                        p=movie.Runtime
+                                        div.buttonDock
+                                            if admin
+                                                a.dock(href=`/settings/${movie._id}`)
+                                                    span.material-icons settings
+                                            if !admin
+                                                a.dock(href='/favorites' value=movie._id)
+                                                    if !search
+                                                        span.material-icons star
+                                                    else if search
                                                         span.material-icons star_border
         script(defer, src='/js/films.js')
 

@@ -4,22 +4,23 @@ html(lang='en')
     body
         include header
         main
-            article
+            article.detail
                 .wrapper
-                    img(src=data.Poster)
-                    span
-                    h2=data.Title 
-                         span (#{data.Year})
-                    h4=data.Director
-                    p=data.Genre
-                    p=data.Runtime
-                    p=data.Actors
+                    div
+                        img(src=data.Poster)
+                        div
+                            h2=data.Title 
+                                span (#{data.Year})
+                            h4=data.Director
+                            p=data.Genre
+                            p=data.Runtime
+                            p=data.Actors
                     p=data.Plot
                     if data.imdbID
-                        a(href=`/search/${data.imdbID}`)
+                        button#favorite(href=`/search/${data.imdbID}`)
                             span.material-icons star_border
                     else
-                        a(href=`/search/${data._id}`)
+                        button#favorite(href=`/search/${data._id}`)
                             span.material-icons star_border
 
         script(defer, src='/js/movie.js')   

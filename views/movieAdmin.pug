@@ -48,5 +48,8 @@ html(lang='en')
                             input(type='text', name='plot', id='_plot' value=content.Plot)
                             label(for='_img') Imagen (url)
                             input(type='text', name='img', id='_img' value=content.Poster)
-                            input(type='submit', value='Guardar')    
+                            div
+                                input.manage(type='submit', value='UPDATE')
+                                button#delete
+                                    span.material-icons delete   
         script(defer, src=`/js/${src}.js`)

@@ -6,6 +6,7 @@ const fetch = require("node-fetch");
 exports.getDashBoard = async (req, res) => {
   if (req.role === "user") {
     res.status(200).render("dashboard", {
+      title: "Dashboard",
       menu: true,
       admin: false,
     });
@@ -49,6 +50,7 @@ exports.getMovies = async (req, res) => {
   if (req.role == "admin") {
     //* Saca TODAS las peliculas de Mongo
     res.status(200).render("movies", {
+      title: "Admin | My Movies",
       menu: true,
       admin: true,
     }); //! render('movies', JSON de usuario)
@@ -60,7 +62,7 @@ exports.getMovies = async (req, res) => {
           console.log(data);
           if (data.Search) {
             res.status(200).render("movies", {
-              title: "User",
+              title: "Find",
               menu: true,
               admin: false,
               search: true,
@@ -71,7 +73,7 @@ exports.getMovies = async (req, res) => {
               if (data.length > 0) {
                 console.log(data);
                 res.status(200).render("movies", {
-                  title: "User",
+                  title: "My movies",
                   menu: true,
                   admin: false,
                   search: true,
@@ -79,7 +81,7 @@ exports.getMovies = async (req, res) => {
                 });
               } else {
                 res.status(200).render("movies", {
-                  title: "User",
+                  title: "My Movies",
                   menu: true,
                   admin: false,
                   search: true,
@@ -91,7 +93,7 @@ exports.getMovies = async (req, res) => {
         }).catch( err => console.error(err));
     }else{
       res.status(200).render("movies", {
-        title: "User",
+        title: "Find",
         menu: true,
         admin: false,
         search: true,
@@ -103,7 +105,7 @@ exports.getMyMovies = async (req, res) => {
   if (req.role == "admin") {
     let data = await mongo.readAllMovies();
     res.status(200).render("movies", {
-      title: "Admin",
+      title: "Admin | My Movies",
       menu: true,
       admin: true,
       data: data,
@@ -159,6 +161,13 @@ exports.postFavorite = async (req, res) => {
 
   }
 };
+exports.deleteFavorite = async (req, res) => {
+  if (req.role == "user") {
+    
+    sql.deleteFavorite(req.email)
+
+  }
+};
 // IDEA: quiero que al rellenar el formulario de la vista de login, si los datos introducidos coinciden con datos de user, la app se direccione a la vista de dashboard.pug y en caso de que esos datos coincidan con datos de admin, la app se direccione a la vista de movies.pug
 
 // if logged render('dashboard') - if !== logged render('login')
@@ -189,10 +198,9 @@ exports.getCreateMovie = async (req, res) => {
     res.status(403).redirect("/");
   }
 };
-exports.getEditMovie = async (req, res) => {
+exports.getSettings = async (req, res) => {
   if (req.role === "admin") {
       let content = await mongo.getMovieById(req.params.id);
-      console.log(req.params.id)
 
     res.status(200).render("movieAdmin", { menu: true, admin: true, method: "PUT", action:"Edita", src:"editMovie", "content": content });
   } else {
@@ -212,8 +220,7 @@ exports.postNewMovie = async (req, res) => {
 //! Mongomongo
 //* mngmongo.js UPDATE
 exports.putMovieDetails = async (req, res) => {
-  console.log(req.body.id);
-  let modification = await mongo.updateFilmDetails(req.body.id);
+  let modification = await mongo.updateFilmDetails(req.params.id, req.body);
   res
     .status(200)
     .json({ status: "Film value/values updated", data: { modification } });
@@ -221,9 +228,9 @@ exports.putMovieDetails = async (req, res) => {
 
 //! Mongodb
 //* mngdb.js DELETE VALUE/VALUES FROM DOCUMENT
-exports.deleteMovieDetails = async (req, res) => {
+exports.deleteMovie = async (req, res) => {
   console.log(req.body.id);
-  let valueElimination = await mongo.deleteFilmDetails(req.body.id);
+  let valueElimination = await mongo.deleteFilm(req.params.id)
   res
     .status(200)
     .json({ status: "Film value/values deleted", data: { valueElimination } });

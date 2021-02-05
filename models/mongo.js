@@ -7,11 +7,8 @@ async function connection() {
   client
     .connect()
     .catch((e) => console.log(e));
-  //console.log(client);
   return client;
 }
-
-// AGREGAR VARIAS PELICULAS A LA COLECCIÓN DE PELICULAS DE LA BASE DE DATOS CREADA EN MONGODB:
 exports.createMovie = async ({
   Title,
   Year,
@@ -23,7 +20,7 @@ exports.createMovie = async ({
   Poster,
   imdbRating
 }) => {
-  const client = await connection(); // Devuelve el objeto de conexion a la BBDD
+  const client = await connection(); 
   const result = await client
     .db("omdb")
     .collection("movies")
@@ -40,13 +37,9 @@ exports.createMovie = async ({
   });
   return result.insertedID;
 };
-// CREATE FILM LISTINGS:
-//exports.createAdminMovies();
 
-// READ
-//readFilmDetails muestra todas las pelis mongo si no se introduce nada en la busqueda y si se introduce algo busca por los caracteres introducidos en relacion
 exports.readAllMovies = async (title) => {
-  let condition = `${/^$/}`; //si no se quiere usar la regex pues = ""
+  let condition = `${/^$/}`; 
   if (title) {
     condition = { Title: new RegExp("^" + title, "i") };
   }
@@ -58,30 +51,28 @@ exports.readAllMovies = async (title) => {
     .toArray();
   return result;
 };
-//exports.readAllMovies();
 
 exports.getMovieById = async (id) => {
-  let objetId1 = new ObjectId(id);
+  let movieID = new ObjectId(id);
   let client = await connection();
   const result = await client
     .db("omdb")
     .collection("movies")
-    .findOne({ _id: objetId1 });
+    .findOne({ _id: movieID});
   return result;
 };
-//exports.getMoviesById("601ab13b295c8159cc461dca");
 
-// MODIFICAR VALORES DE UNA PELICULA DE LA COLECCIÓN DE PELICULAS DE LA BASE DE DATOS CREADA EN MONGODB:
 exports.updateFilmDetails = async (
   id,
   { Title, Year, Runtime, Genre, Director, Actors, Plot, Poster, imdbRating }
 ) => {
+  let movieID = new ObjectId(id);
   let client = await connection();
   const result = await client
     .db("omdb")
     .collection("movies")
     .updateOne(
-      { _id: id },
+      { _id: movieID },
       {
         $set: {
           Title: Title,
@@ -96,36 +87,17 @@ exports.updateFilmDetails = async (
         },
       }
     );
-  console.log("Listing values updated");
+  console.log(result);
   return result;
 };
-// UPDATE FILM LISTINGS VALUES:
-//exports.updateFilmDetails();
 
-// ELIMINAR VALORES DE UNA PELICULA DE LA COLECCIÓN DE PELICULAS DE LA BASE DE DATOS CREADA EN MONGODB:
-exports.deleteFilmDetails = async () => {
+exports.deleteFilm = async (id) => {
+  let movieID = new ObjectId(id);
   let client = await connection();
   const result = await client
     .db("omdb")
     .collection("movies")
-    .updateOne(
-      { Title: "Bbbb" },
-      { $unset: { Rated: "+16", Runtime: "90 min" } }
-    );
-  console.log("Listing values updated");
-  return result;
-};
-// UPDATE FILM LISTINGS VALUES:
-//exports.deleteFilmDetails();
-
-// ELIMINAR UNA PELICULA DE LA COLECCIÓN DE PELICULAS DE LA BASE DE DATOS CREADA EN MONGODB:
-exports.deleteFilm = async () => {
-  let client = await connection();
-  const result = await client
-    .db("omdb")
-    .collection("movies")
-    .deleteOne({ Title: "Bbbb" });
+    .deleteOne({ _id: movieID });
   console.log("Listing deleted");
   return result;
 };
-// DELETE FILM LISTING:

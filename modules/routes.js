@@ -30,31 +30,29 @@ routes.get("/movies", movies.claims, movies.getMyMovies); //* Llevar a la lista 
 routes.get("/logout", movies.claims, movies.getLogOut); //* Llevar a la lista personalizada del USUARIO de sus peliculas guardadas
 
 // Private POST petitions
-
-// Protegida (User y Admin)
-//routes.post('/logout', movies.postLogOut);
+routes.post("/search/:id", movies.claims, movies.postFavorite);
+routes.delete("/search/:id", movies.claims, movies.deleteFavorite);
 //* Cierre de sesion en la app
 
-//! Protegida (Admin)
-routes.post('/createMovie', movies.postNewMovie);
-//* Adición de una nueva pelicula a la app
 
-routes.get('/createMovie', movies.claims, movies.getCreateMovie);
 
-routes.get('/editMovie/:id', movies.claims, movies.getEditMovie);
+routes.get('/settings', movies.claims, movies.getCreateMovie);
 
-routes.post('/createMovie', movies.claims, movies.postNewMovie);
+routes.get('/settings/:id', movies.claims, movies.getSettings);
+
+routes.post('/settings', movies.claims, movies.postNewMovie);
 //PUT petitions
 //! MongoDB
 //Protegida (Admin)
-routes.put('/editMovie', movies.putMovieDetails);
+routes.put('/settings/:id', movies.putMovieDetails);
 //* Edición de una pelicula y/o sus detalles ya existentes en la app
 
+routes.delete('/settings/:id', movies.deleteMovie);
 
 //DELETE petitions
 //! MongoDB
 //Protegida (Admin)
-//routes.delete('/removeMovie', movies.deleteMovie);
+
 //* Eliminación de una pelicula y todo su contenido ya existente en la app
 
 

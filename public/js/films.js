@@ -1,6 +1,7 @@
-const keyword = document.querySelector('div#search > input[type="text"]');
-const searchButton = document.querySelector("div#search > button");
-if (searchButton) {
+const favorite = document.querySelector('a#button');
+if (document.querySelector("div#search > button")) {
+  const searchButton = document.querySelector("div#search > button");
+  const keyword = document.querySelector('div#search > input[type="text"]');
   function search() {
     if (keyword.value) {
       window.location.assign(`/search?s=${keyword.value}`);
@@ -10,3 +11,7 @@ if (searchButton) {
   }
   searchButton.addEventListener("click", search);
 };
+
+favorite.addEventListener('click', () =>{
+    fetch(window.location.href, )
+})
