@@ -9,7 +9,24 @@ const rating = document.querySelector('form > input[name="rating"]');
 const plot = document.querySelector('form > input[name="plot"]');
 const img = document.querySelector('form > input[name="img"]');
 const fields = [title, year, director, cast, genre, duration, rating, plot, img];
-
+if (document.querySelector('button#delete')){
+  const deleteButton = document.querySelector('button#delete');
+  deleteButton.addEventListener('click', () =>{
+    
+      fetch(window.location.href, {
+          Accept: 'application/json',
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+        .then(res => res.json())
+        .then(() => {
+          window.location.assign('/movies')
+        })
+        .catch((error) => console.error("Error:", error));
+  });
+}
 function check (e) {
   e.preventDefault();
   for(i = 0; i < fields.length; i++){
@@ -20,9 +37,9 @@ function check (e) {
       return
     }
   }
-    fetch("http://localhost:3000/settings", {
+    fetch(window.location.href, {
         Accept: 'application/json',
-        method: "POST",
+        method: "PUT",
         body: JSON.stringify({
           Title: title.value,
           Year: year.value,

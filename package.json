@@ -4,16 +4,21 @@
   "description": "OMDB app",
   "main": "index.js",
   "dependencies": {
-    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "firebase-admin": "^9.4.2",
     "jsonwebtoken": "^8.5.1",
+    "mariadb": "^2.5.2",
+    "mongodb": "^3.6.3",
     "node-fetch": "^2.6.1",
+    "path": "^0.12.7",
     "pug": "^3.0.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js"
+    "start": "nodemon app.js",
+    "repair": "fuser -k 3000/tcp"
   },
   "repository": {
     "type": "git",

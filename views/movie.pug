@@ -1,18 +1,26 @@
 <!DOCTYPE html>
 html(lang='en')
     include head
-    script(defer, src='./js/movie.js')
     body
         include header
         main
-            article
+            article.detail
                 .wrapper
-                    img
-                    span rating
-                    h2 titulo (año)
-                    h4 director
-                    p genero
-                    p duracion
-                    p reparto
-                    p sinopsis
-                    a i añadir a favoritos   
+                    div
+                        img(src=data.Poster)
+                        div
+                            h2=data.Title 
+                                span (#{data.Year})
+                            h4=data.Director
+                            p=data.Genre
+                            p=data.Runtime
+                            p=data.Actors
+                    p=data.Plot
+                    if data.imdbID
+                        button#favorite(href=`/search/${data.imdbID}`)
+                            span.material-icons star_border
+                    else
+                        button#favorite(href=`/search/${data._id}`)
+                            span.material-icons star_border
+
+        script(defer, src='/js/movie.js')   

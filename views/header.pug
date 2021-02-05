@@ -1,16 +1,25 @@
 header 
     .wrapper
-        h1 OMDB
-        //if logged in {
-            nav
-                ul
-                    if(usuario){
-                        li
-                            a(href='/search')
-                        li
-                            a(href='/movies')
-                        }
-                    li
-                        a(href='/logout')
-                    }    
-                        
+        a(href='/')
+            h1 OMDB
+
+        if menu           
+            span.material-icons menu
+if admin
+    nav.admin
+        ul
+            li
+                .wrapper
+                    a(href='/logout')  Log out
+else if !admin
+    nav
+        ul
+            li
+                .wrapper
+                    a(href='/search') Find
+            li
+                .wrapper
+                    a(href='/movies') My movies
+            li
+                .wrapper
+                    a(href='/logout')  Log out

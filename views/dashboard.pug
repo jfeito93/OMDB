@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 html(lang='en')
     include head
-    script(defer, src=`./JS/dashboard.js`)
     body
         include header
-    main
+        main
             article
                 .wrapper
-                    h2 Busca una peli!
-                    button(onclick="window.location.href='/search'") Ir al Buscador
+                    h2 Looking for a new movie?
+                    button(onclick="window.location.href='/search'") Find a movie!    
             article
                 .wrapper
-                    h2 Tus pelis favoritas
-                    button(onclick="window.location.href='/movies'") Ir a Mis pelis favoritas
-            a( href='/logout') Cerrar Sesión
+                    h2 Your collection
+                    button(onclick="window.location.href='/movies'") My favorite movies!
+            .wrapper
+                a( href='/logout') Log out
+        script(defer, src=`/js/dashboard.js`)
+        
                 
