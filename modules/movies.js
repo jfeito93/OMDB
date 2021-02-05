@@ -53,6 +53,7 @@ exports.getMovies = async (req, res) => {
       title: "Admin | My Movies",
       menu: true,
       admin: true,
+      data: await mongo.readAllMovies(),
     }); //! render('movies', JSON de usuario)
   } else if (req.role == "user") {
     if (req.query.s) {
@@ -90,8 +91,9 @@ exports.getMovies = async (req, res) => {
               }
             }).catch( err => console.error(err));
           }
-        }).catch( err => console.error(err));
-    }else{
+        })
+        .catch((err) => console.error(err));
+    } else {
       res.status(200).render("movies", {
         title: "Find",
         menu: true,

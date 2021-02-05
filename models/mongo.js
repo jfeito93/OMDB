@@ -1,7 +1,6 @@
 const MongoClient = require("mongodb").MongoClient;
 const url = "mongodb://localhost:27017/";
 const ObjectId = require("mongodb").ObjectID;
-
 async function connection() {
   const client = await MongoClient(url, { useUnifiedTopology: true });
   client
@@ -18,7 +17,7 @@ exports.createMovie = async ({
   Actors,
   Plot,
   Poster,
-  imdbRating
+  imdbRating,
 }) => {
   const client = await connection(); 
   const result = await client
@@ -37,7 +36,6 @@ exports.createMovie = async ({
   });
   return result.insertedID;
 };
-
 exports.readAllMovies = async (title) => {
   let condition = `${/^$/}`; 
   if (title) {

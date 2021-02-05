@@ -286,3 +286,9 @@ button#delete{
   display: inline-block;
   margin-right: 0;
 }
+h1#statuserror {
+  font-family: "Press Start 2P", cursive;
+  font-size: 90px;
+  color: var(--mainColor);
+  margin-bottom: 0;
+}
